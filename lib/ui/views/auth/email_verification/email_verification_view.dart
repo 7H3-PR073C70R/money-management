@@ -5,6 +5,8 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:money_management/constants/app_image_path.dart';
 import 'package:money_management/constants/app_string.dart';
+import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/style.dart';
 import 'package:stacked/stacked.dart';
 import 'email_varification_view_model.dart';
 
@@ -68,74 +70,18 @@ class EmailVarificationView extends StatelessWidget {
             const SizedBox(
               height: 40,
             ),
-            //       OTPTextField(
-            //   length: 5,
-            //   width: MediaQuery.of(context).size.width,
-            //   textFieldAlignment: MainAxisAlignment.spaceAround,
-            //   fieldWidth: 55,
-            //   fieldStyle: FieldStyle.box,
-            //   outlineBorderRadius: 15,
-            //   style: TextStyle(fontSize: 17),
-            //   onChanged: (pin) {
-            //     print("Changed: " + pin);
-            //   },
-            //   onCompleted: (pin) {
-            //     print("Completed: " + pin);
-            //   },
-            // ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 60,
-                  width: 61,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color.fromRGBO(18, 20, 23, 1)),
-                    borderRadius: BorderRadius.circular(8)
-                  ),
-                ),
-                const SizedBox(width: 20,),
-                Container(
-                  height: 60,
-                  width: 61,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color.fromRGBO(18, 20, 23, 1)),
-                    borderRadius: BorderRadius.circular(8)
-                  ),
-                ),
-                const SizedBox(width: 20,),
-                Container(
-                  height: 60,
-                  width: 61,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color.fromRGBO(18, 20, 23, 1)),
-                    borderRadius: BorderRadius.circular(8)
-                  ),
-                ),
-                const SizedBox(width: 20,),
-                Container(
-                  height: 60,
-                  width: 61,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color.fromRGBO(18, 20, 23, 1)),
-                    borderRadius: BorderRadius.circular(8)
-                  ),
-                ),                
-              ],
-            ),
-            const SizedBox(
-              height: 38,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                BoxText.body(dontRecieveCodeText),
-                const SizedBox(width: 5,),
-                GestureDetector(
-                  onTap: (){
-                  },
-                  child: Text(resendText, style: bodyStyle.copyWith(color: const Color.fromRGBO(3, 74, 179, 1), fontWeight: FontWeight.w700),))
-              ],
+                  OTPTextField(
+              length: 5,
+              width: MediaQuery.of(context).size.width,
+              textFieldAlignment: MainAxisAlignment.spaceAround,
+              fieldWidth: 55,
+              fieldStyle: FieldStyle.box,
+              outlineBorderRadius: 15,
+              style: const TextStyle(fontSize: 17),
+              onChanged: (pin) {
+              },
+              onCompleted: (pin) {
+              },
             ),
             const SizedBox(height: 16,),
             const Padding(
