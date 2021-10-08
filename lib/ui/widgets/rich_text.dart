@@ -1,0 +1,22 @@
+import 'package:box_ui/box_ui.dart';
+import 'package:flutter/material.dart';
+
+class RichTexts extends StatelessWidget {
+  final String? text1;
+  final String text2;
+  const RichTexts(this.text1, this.text2, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+          text: 'Create',
+          style: heading6Style.copyWith(color: kcSecondaryColor),
+          children: [
+            TextSpan(
+                text: ' Personal Account',
+                style: heading6Style.copyWith(color: kcMaxGray))
+          ]),
+    );
+  }
+}

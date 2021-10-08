@@ -1,0 +1,9 @@
+const String emailSentImage = 'assets/images/email_sent.png';
+const String emailVerifySvg = 'assets/images/email_veri.svg';
+const String emailVerifySvg2 = 'assets/images/email_veri2.svg';
+const String splashImage = 'assets/images/splash.png';
+const String backArrowSvg = 'assets/images/back_arrow.svg';
+const String signUpSvg = 'assets/images/sign_up.svg';
+const String googleSvg = 'assets/images/google.svg';
+const String facebookSvg = 'assets/images/facebook.svg';
+const String twitterSvg = 'assets/images/twitter.svg';
