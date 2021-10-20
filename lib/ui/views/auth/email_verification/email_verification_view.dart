@@ -5,6 +5,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:money_management/constants/app_image_path.dart';
 import 'package:money_management/constants/app_string.dart';
+import 'package:money_management/ui/views/auth/verified/verified_view.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:stacked/stacked.dart';
@@ -84,9 +85,9 @@ class EmailVarificationView extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16,),
-            const Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 35),
-              child:  BoxButton(title: verifyText),
+             Padding(
+              padding: const  EdgeInsets.symmetric(horizontal: 35),
+              child:  BoxButton(title: verifyText, onTap: () => Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context)=> const VerifiedView())),),
             ),
             const SizedBox(height: 16,),
             GestureDetector(

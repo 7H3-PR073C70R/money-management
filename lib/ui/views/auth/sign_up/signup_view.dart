@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:money_management/constants/app_image_path.dart';
 import 'package:money_management/constants/app_string.dart';
+import 'package:money_management/ui/shared/dumb_widgets/rich_text.dart';
 import 'signup_view_model.dart';
-import 'package:money_management/ui/widgets/rich_text.dart';
 import 'package:stacked/stacked.dart';
 
 class SignUpView extends StatelessWidget {
@@ -94,7 +94,7 @@ class SignUpView extends StatelessWidget {
                               children: [
                                 BoxText.body(alreadyHaveanAccountText, color: kcMiniGray,),
                                 GestureDetector(
-                                  onTap: (){},
+                                  onTap: () => model.gotoLogin(context),
                                   child: BoxText.body(loginOrSignupLoginText, color: kcPrimaryColor,)
                                 )
                               ],
