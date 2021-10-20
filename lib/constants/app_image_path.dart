@@ -7,3 +7,5 @@ const String signUpSvg = 'assets/images/sign_up.svg';
 const String googleSvg = 'assets/images/google.svg';
 const String facebookSvg = 'assets/images/facebook.svg';
 const String twitterSvg = 'assets/images/twitter.svg';
+const String verifiedPng = 'assets/images/verified.png';
+const String logInPng = 'assets/images/login.png';

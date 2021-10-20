@@ -23,9 +23,10 @@ class LoginOrSignUpView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                const BoxButton(
+                BoxButton(
                   title: loginOrSignupLoginText,
                   isLogin: true,
+                  onTap: () => model.gotoLogin(context),
                 ),
                 const SizedBox(
                   height: 32,

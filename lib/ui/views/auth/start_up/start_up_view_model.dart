@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import '../login_or_signup/login_or_signup_view.dart';
 import 'package:stacked/stacked.dart';
 
@@ -40,7 +40,7 @@ your finances''',
 
   void gotoLoginOrSignUP(BuildContext context) {
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const LoginOrSignUpView()));
+        CupertinoPageRoute(builder: (context) => const LoginOrSignUpView()));
   }
 
   int get index => _index;
