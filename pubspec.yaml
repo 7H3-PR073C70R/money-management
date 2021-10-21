@@ -44,6 +44,8 @@ dependencies:
   freezed_annotation: 
   json_annotation:
   otp_text_field:
+  dependencies:
+  intl: ^0.17.0
  
 dev_dependencies:
   flutter_test:
