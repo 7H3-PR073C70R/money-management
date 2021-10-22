@@ -17,3 +17,5 @@ const String report = 'assets/images/report.svg';
 const String budget = 'assets/images/budget.svg';
 const String settings = 'assets/images/settings.svg';
 const String filter = 'assets/images/filter.svg';
+const String calenderSvg = 'assets/images/calender.svg';
+const String noItemSvg = 'assets/images/empty.svg';
