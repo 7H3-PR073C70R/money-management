@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:money_management/ui/shared/const_ui_helper.dart';
 import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
-import 'package:stacked/stacked.dart';
+
 
 class AddNoteView extends StatelessWidget {
   const AddNoteView({Key? key}) : super(key: key);

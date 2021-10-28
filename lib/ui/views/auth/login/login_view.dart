@@ -72,7 +72,7 @@ class LoginView extends StatelessWidget {
                             title: loginOrSignupLoginText,
                             onTap: () => Navigator.of(context).pushReplacement(
                                 CupertinoPageRoute(
-                                    builder: (context) =>  HomeView()))),
+                                    builder: (context) =>  const HomeView()))),
                         verticalSpaceSmall,
                         Align(
                           alignment: Alignment.bottomRight,
