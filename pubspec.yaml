@@ -41,19 +41,15 @@ dependencies:
   stacked_services:
   flutter_svg: ^0.22.0
   google_fonts: ^2.1.0
-  freezed_annotation: 
-  json_annotation:
   otp_text_field:
-  dependencies:
   intl: ^0.17.0
+  fl_chart: ^0.40.2
+  sqflite: ^2.0.0+4
  
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  stacked_generator: ^0.5.1
-  build_runner:
-  freezed: 
-  json_serializable:
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

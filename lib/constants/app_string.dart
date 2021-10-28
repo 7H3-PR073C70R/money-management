@@ -50,3 +50,5 @@ const String addIncomeText = 'Add Income';
 const String addExpenseText = 'Add Expenses';
 const String noItemText = 'There are no income or expense to track';
 const String noItemButtonText = 'Create A Budget';
+const String incomeText = 'Income';
+const String expenseText = 'Expenses';
