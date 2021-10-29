@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '/ui/views/auth/start_up/start_up_view.dart';
 
 void main() {
@@ -16,9 +17,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           scaffoldBackgroundColor: Colors.white,
-          appBarTheme: const AppBarTheme(
+          appBarTheme:AppBarTheme(
             color: Colors.white,
-            elevation: 0
+            elevation: 0,
+            systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
+            statusBarColor: Colors.white,
+            statusBarBrightness: Brightness.light,
+            statusBarIconBrightness: Brightness.dark,
+          ),
           )
           ),
       home: const StartUpView(),

@@ -10,7 +10,7 @@ import 'package:money_management/ui/shared/dumb_widgets/rich_text.dart';
 import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
 import 'package:money_management/ui/views/auth/forget_password/forget_password_view.dart';
 import 'package:money_management/ui/views/auth/sign_up/signup_view.dart';
-import 'package:money_management/ui/views/main/home/home_view.dart';
+import 'package:money_management/ui/views/main/main_view.dart';
 import 'login_view_model.dart';
 import 'package:stacked/stacked.dart';
 
@@ -47,7 +47,7 @@ class LoginView extends StatelessWidget {
                         BoxInputField(
                           placeHolder: passwordPlaceHolder,
                           isPassword: true,
-                          onVisibility: model.setIsPasswordVisible,
+                          onVisibilityPressed: model.setIsPasswordVisible,
                           passwordVisibility: model.isPasswordVisible,
                         ),
                         verticalSpaceVeryTiny,
@@ -72,7 +72,7 @@ class LoginView extends StatelessWidget {
                             title: loginOrSignupLoginText,
                             onTap: () => Navigator.of(context).pushReplacement(
                                 CupertinoPageRoute(
-                                    builder: (context) =>  const HomeView()))),
+                                    builder: (context) =>  const MainView()))),
                         verticalSpaceSmall,
                         Align(
                           alignment: Alignment.bottomRight,

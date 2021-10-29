@@ -14,8 +14,8 @@ import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
 import 'package:stacked/stacked.dart';
 import 'report_view_model.dart';
 
-class ReportWidget extends StatelessWidget {
-  const ReportWidget({Key? key}) : super(key: key);
+class ReportView extends StatelessWidget {
+  const ReportView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:money_management/constants/app_image_path.dart';
 import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/ui/views/main/home/home_view_model.dart';
+import 'package:money_management/ui/views/main/main_view_model.dart';
 
 class NavBar extends StatelessWidget {
-  final HomeViewModel model;
+  final MainViewModel model;
   const NavBar({ Key? key, required this.model }) : super(key: key);
 
   @override

@@ -52,11 +52,11 @@ class SignUpView extends StatelessWidget {
                             const SizedBox(
                               height: 16,
                             ),
-                            BoxInputField(placeHolder: passwordPlaceHolder, isPassword: true, passwordVisibility: model.passwordVisibility, onVisibility: model.setPasswordVisibility,),
+                            BoxInputField(placeHolder: passwordPlaceHolder, isPassword: true, passwordVisibility: model.passwordVisibility, onVisibilityPressed: model.setPasswordVisibility,),
                             const SizedBox(
                               height: 16,
                             ),
-                            BoxInputField(placeHolder: confirmPasswordPlaceHolder, isPassword: true, passwordVisibility: model.passwordVisibility, onVisibility: model.setPasswordVisibility,),
+                            BoxInputField(placeHolder: confirmPasswordPlaceHolder, isPassword: true, passwordVisibility: model.passwordVisibility, onVisibilityPressed: model.setPasswordVisibility,),
                             const SizedBox(
                               height: 16,
                             ),

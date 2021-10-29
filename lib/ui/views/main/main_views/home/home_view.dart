@@ -16,8 +16,8 @@ import 'package:money_management/ui/views/main/notes/note_view.dart';
 import 'package:stacked/stacked.dart';
 import 'home_view_model.dart';
 
-class HomeWidget extends StatelessWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+class HomeView extends StatelessWidget {
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +29,9 @@ class HomeWidget extends StatelessWidget {
         HomeViewModel model,
         Widget? child,
       ) {
-        return StatusBar(
+        return model.showNoteView ? NoteView(model: model) : StatusBar(
           color: kcPrimaryColor,
-          child: model.showNoteView ? NoteView(model: model) : Scaffold(
+          child: Scaffold(
               backgroundColor: model.showBottomSheet ? Colors.grey : Colors.white,
               floatingActionButton:
                   !model.showBottomSheet ? BuildFab(model: model) : null,
@@ -109,8 +109,9 @@ class HomeWidget extends StatelessWidget {
                     ],
                   ),
                   verticalSpaceSmall,
-                  SizedBox(
-                    height: screenHeight * 0.25,
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 70),
+                    height: screenHeight - ((screenHeight * 0.20) + 290 + MediaQuery.of(context).viewInsets.bottom),
                     child: ListView.separated(
                         itemBuilder: (context, index) => BuildInfoContainer(
                               price: 'N17,000',
