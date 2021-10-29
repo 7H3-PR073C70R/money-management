@@ -10,12 +10,12 @@ class RichTexts extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-          text: 'Create',
-          style: heading6Style.copyWith(color: kcSecondaryColor),
+          text: text1,
+          style: heading4Style.copyWith(color: kcSecondaryColor),
           children: [
             TextSpan(
-                text: ' Personal Account',
-                style: heading6Style.copyWith(color: kcMaxGray))
+                text: ' $text2',
+                style: heading4Style.copyWith(color: kcMaxGray))
           ]),
     );
   }

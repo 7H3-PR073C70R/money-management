@@ -30,6 +30,9 @@
 .pub-cache/
 .pub/
 /build/
+/Web/
+/windows/
+/winuwp/
 
 # Web related
 lib/generated_plugin_registrant.dart

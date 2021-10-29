@@ -5,6 +5,10 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:money_management/constants/app_image_path.dart';
 import 'package:money_management/constants/app_string.dart';
+import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
+import 'package:money_management/ui/views/auth/verified/verified_view.dart';
+import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/style.dart';
 import 'package:stacked/stacked.dart';
 import 'email_varification_view_model.dart';
 
@@ -20,135 +24,81 @@ class EmailVarificationView extends StatelessWidget {
         EmailVarificationViewModel model,
         Widget? child,
       ) {
-        return Scaffold(
-          backgroundColor: Colors.white,
-            body: SafeArea(
-                child: SingleChildScrollView(
-                  child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 100,
-            ),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                  SvgPicture.asset(emailVerifySvg),
-                  Center(
-                    child: SvgPicture.asset(emailVerifySvg2),
-                  )
-              ],
-            ),
-            const SizedBox(
-              height: 36,
-            ),
-            Text.rich(TextSpan(
-                  text: emailText,
-                  style: heading5Style.copyWith(color: Colors.green),
-                  children: [
-                    TextSpan(
-                        text: verificationText,
-                        style: heading5Style.copyWith(color: Colors.black))
-                  ])),
-            const SizedBox(
-              height: 16,
-            ),
-            Container(
-              color: const Color.fromRGBO(234, 241, 251, 1),
-              height: 87,
-              width: 305,
-              child:  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 35),
-                    child: Text(
-                      weSentVerificationText,
-                      style: bodyStyle.copyWith(color: const Color.fromRGBO(47, 115, 218, 1)),
-                    )),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            //       OTPTextField(
-            //   length: 5,
-            //   width: MediaQuery.of(context).size.width,
-            //   textFieldAlignment: MainAxisAlignment.spaceAround,
-            //   fieldWidth: 55,
-            //   fieldStyle: FieldStyle.box,
-            //   outlineBorderRadius: 15,
-            //   style: TextStyle(fontSize: 17),
-            //   onChanged: (pin) {
-            //     print("Changed: " + pin);
-            //   },
-            //   onCompleted: (pin) {
-            //     print("Completed: " + pin);
-            //   },
-            // ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 60,
-                  width: 61,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color.fromRGBO(18, 20, 23, 1)),
-                    borderRadius: BorderRadius.circular(8)
-                  ),
-                ),
-                const SizedBox(width: 20,),
-                Container(
-                  height: 60,
-                  width: 61,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color.fromRGBO(18, 20, 23, 1)),
-                    borderRadius: BorderRadius.circular(8)
-                  ),
-                ),
-                const SizedBox(width: 20,),
-                Container(
-                  height: 60,
-                  width: 61,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color.fromRGBO(18, 20, 23, 1)),
-                    borderRadius: BorderRadius.circular(8)
-                  ),
-                ),
-                const SizedBox(width: 20,),
-                Container(
-                  height: 60,
-                  width: 61,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color.fromRGBO(18, 20, 23, 1)),
-                    borderRadius: BorderRadius.circular(8)
-                  ),
-                ),                
-              ],
-            ),
-            const SizedBox(
-              height: 38,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                BoxText.body(dontRecieveCodeText),
-                const SizedBox(width: 5,),
-                GestureDetector(
-                  onTap: (){
-                  },
-                  child: Text(resendText, style: bodyStyle.copyWith(color: const Color.fromRGBO(3, 74, 179, 1), fontWeight: FontWeight.w700),))
-              ],
-            ),
-            const SizedBox(height: 16,),
-            const Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 35),
-              child:  BoxButton(title: verifyText),
-            ),
-            const SizedBox(height: 16,),
-            GestureDetector(
-              child: BoxText.body(cancelText, color: const Color.fromRGBO(234, 82, 48, 1),),
-            )
-          ],
-        ),
-                )));
+        return StatusBar(
+          child: Scaffold(
+            backgroundColor: Colors.white,
+              body: SafeArea(
+                  child: SingleChildScrollView(
+                    child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 100,
+              ),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                    SvgPicture.asset(emailVerifySvg),
+                    Center(
+                      child: SvgPicture.asset(emailVerifySvg2),
+                    )
+                ],
+              ),
+              const SizedBox(
+                height: 36,
+              ),
+              Text.rich(TextSpan(
+                    text: emailText,
+                    style: heading5Style.copyWith(color: Colors.green),
+                    children: [
+                      TextSpan(
+                          text: verificationText,
+                          style: heading5Style.copyWith(color: Colors.black))
+                    ])),
+              const SizedBox(
+                height: 16,
+              ),
+              Container(
+                color: const Color.fromRGBO(234, 241, 251, 1),
+                height: 87,
+                width: 305,
+                child:  Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 35),
+                      child: Text(
+                        weSentVerificationText,
+                        style: bodyStyle.copyWith(color: const Color.fromRGBO(47, 115, 218, 1)),
+                      )),
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+                    OTPTextField(
+                length: 5,
+                width: MediaQuery.of(context).size.width,
+                textFieldAlignment: MainAxisAlignment.spaceAround,
+                fieldWidth: 55,
+                fieldStyle: FieldStyle.box,
+                outlineBorderRadius: 15,
+                style: const TextStyle(fontSize: 17),
+                onChanged: (pin) {
+                },
+                onCompleted: (pin) {
+                },
+              ),
+              const SizedBox(height: 16,),
+               Padding(
+                padding: const  EdgeInsets.symmetric(horizontal: 35),
+                child:  BoxButton(title: verifyText, onTap: () => Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context)=> const VerifiedView())),),
+              ),
+              const SizedBox(height: 16,),
+              GestureDetector(
+                child: BoxText.body(cancelText, color: const Color.fromRGBO(234, 82, 48, 1),),
+              )
+            ],
+          ),
+                  ))),
+        );
       },
     );
   }
