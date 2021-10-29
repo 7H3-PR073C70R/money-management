@@ -11,7 +11,7 @@ class BoxInputField extends StatelessWidget {
   final String? label;
   final int? maxLines;
   final TextInputType? keyboardType;
-  final void Function()? onVisibility;
+  final void Function()? onVisibilityPressed;
   final void Function(String value)? onChanged;
   final circularBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(8),
@@ -27,7 +27,7 @@ class BoxInputField extends StatelessWidget {
       this.maxLines,
       this.isPassword = false,
       this.enabled = true,
-      this.onVisibility})
+      this.onVisibilityPressed})
       : super(key: key);
 
   @override
@@ -39,13 +39,7 @@ class BoxInputField extends StatelessWidget {
             children: [
               Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    label ?? '',
-                    style: heading6Style.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: const Color.fromRGBO(73, 80, 90, 1)),
-                  )),
+                  child: BoxText.body(label ?? '',)),
               const SizedBox(
                 height: 2,
               )
@@ -77,7 +71,7 @@ class BoxInputField extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: IconButton(
-                    onPressed: onVisibility,
+                    onPressed: onVisibilityPressed,
                     icon: Icon(passwordVisibility
                         ? Icons.visibility_off
                         : Icons.visibility)),

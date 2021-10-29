@@ -1,6 +1,6 @@
 import 'package:stacked/stacked.dart';
 
-class HomeViewModel extends BaseViewModel {
+class MainViewModel extends BaseViewModel {
   int _currentPageIndex = 0;
   int get currentPageIndex => _currentPageIndex;
   bool _isFabPressed = false;

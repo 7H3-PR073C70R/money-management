@@ -9,7 +9,6 @@ import 'package:money_management/ui/shared/const_ui_helper.dart';
 import 'package:money_management/ui/shared/dumb_widgets/build_label_container.dart';
 import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
 import 'package:stacked/stacked.dart';
-
 import 'add_income_or_expenses_view_model.dart';
 
 class AddIncomeOrExpensesView extends StatelessWidget {
@@ -34,7 +33,7 @@ class AddIncomeOrExpensesView extends StatelessWidget {
                 child: BuildBottomModelSheet(isIncome: isIncome, model: model,)) : null,
           appBar: AppBar(
             centerTitle: true,
-            
+            backgroundColor: model.showModelBottomSheet ? kcNeutral6 : Colors.white,
             leading:  IconButton(
                       onPressed: () => Navigator.of(context).pop(),
                       icon: const Icon(Icons.arrow_back, color: Colors.black,)),

@@ -5,8 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:money_management/ui/shared/const_color_helper.dart';
 import 'package:money_management/ui/shared/const_ui_helper.dart';
 import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
-import 'package:money_management/ui/views/main/home/widgets/home/home_view_model.dart';
-
+import 'package:money_management/ui/views/main/main_views/home/home_view_model.dart';
 import 'add_note_view.dart';
 
 class NoteView extends StatelessWidget {
