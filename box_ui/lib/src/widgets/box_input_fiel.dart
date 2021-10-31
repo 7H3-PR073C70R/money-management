@@ -9,14 +9,12 @@ class BoxInputField extends StatelessWidget {
   final bool enabled;
   final bool passwordVisibility;
   final String? label;
+  final FocusNode? focusNode;
   final int? maxLines;
   final TextInputType? keyboardType;
   final void Function()? onVisibilityPressed;
   final void Function(String value)? onChanged;
-  final circularBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8),
-  );
-  BoxInputField(
+  const BoxInputField(
       {Key? key,
       this.passwordVisibility = false,
       this.controller,
@@ -24,6 +22,7 @@ class BoxInputField extends StatelessWidget {
       this.onChanged,
       this.keyboardType,
       this.label,
+      this.focusNode,
       this.maxLines,
       this.isPassword = false,
       this.enabled = true,
@@ -32,6 +31,9 @@ class BoxInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final circularBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(8),
+  );
     return Column(
       children: [
         if (label != null)
@@ -51,6 +53,7 @@ class BoxInputField extends StatelessWidget {
               controller: controller,
               style: const TextStyle(height: 1),
               keyboardType: keyboardType,
+              focusNode: focusNode,
               onChanged: onChanged,
               enabled: enabled,
               maxLines: maxLines,

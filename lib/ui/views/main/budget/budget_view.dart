@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:money_management/constants/app_string.dart';
 import 'package:money_management/ui/shared/const_color_helper.dart';
 import 'package:money_management/ui/shared/const_ui_helper.dart';
+import 'package:money_management/ui/shared/dumb_widgets/no_item.dart';
 import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
 import 'package:stacked/stacked.dart';
 
@@ -20,7 +21,7 @@ class BudgetView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<BudgetViewModel>.reactive(
       viewModelBuilder: () => BudgetViewModel(),
-      onModelReady: (model) => model.setBudgetsToDisplay(),
+      onModelReady: (model) async => await model.init(),
       builder: (
         BuildContext context,
         BudgetViewModel model,
@@ -47,7 +48,7 @@ class BudgetView extends StatelessWidget {
                     ),
                     centerTitle: true,
                   ),
-                  body: SafeArea(
+                  body: model.budgetsToDisplay.isEmpty ? const NoItem(text: noItemBudgetText) : SafeArea(
                       child: Column(
                     children: [
                       verticalSpaceSmall,

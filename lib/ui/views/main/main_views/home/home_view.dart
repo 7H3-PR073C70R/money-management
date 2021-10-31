@@ -7,8 +7,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:money_management/constants/app_image_path.dart';
 import 'package:money_management/constants/app_string.dart';
+import 'package:money_management/model/incomde_and_expenses_model.dart';
 import 'package:money_management/ui/shared/const_ui_helper.dart';
 import 'package:money_management/ui/shared/dumb_widgets/bottom_sheet.dart';
+import 'package:money_management/ui/shared/dumb_widgets/no_item.dart';
 import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
 import 'package:money_management/ui/views/main/income_and_expenses/add_income_or_expenses_view.dart';
 import 'package:money_management/ui/views/main/notes/add_note_view.dart';
@@ -24,118 +26,150 @@ class HomeView extends StatelessWidget {
     final screenHeight = screenHeiht(context);
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
+      onModelReady: (model) async => await model.init(),
       builder: (
         BuildContext context,
         HomeViewModel model,
         Widget? child,
       ) {
-        return model.showNoteView ? NoteView(model: model) : StatusBar(
-          color: kcPrimaryColor,
-          child: Scaffold(
-              backgroundColor: model.showBottomSheet ? Colors.grey : Colors.white,
-              floatingActionButton:
-                  !model.showBottomSheet ? BuildFab(model: model) : null,
-              bottomSheet: model.showBottomSheet
-                  ? Container(
-                    color: Colors.grey,
-                    child: BuildBottomSheet(selectedFilterIndex: model.selectedFilterIndex, setSelectedFilterIndex: model.setSelectedFilterIndex, setShowBottomSheet: model.setShowBottomSheet))
-                  : null,
-              body: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 18.0,
-                    ),
-                    height: screenHeight * 0.20,
-                    decoration: const BoxDecoration(
-                      color: kcPrimaryColor,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30)),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+        return model.showNoteView
+            ? NoteView(model: model)
+            : StatusBar(
+                color: kcPrimaryColor,
+                child: Scaffold(
+                    backgroundColor:
+                        model.showBottomSheet ? Colors.grey : Colors.white,
+                    floatingActionButton:
+                        !model.showBottomSheet ? BuildFab(model: model) : null,
+                    bottomSheet: model.showBottomSheet
+                        ? Container(
+                            color: Colors.grey,
+                            child: BuildBottomSheet(
+                                selectedFilterIndex: model.selectedFilterIndex,
+                                setSelectedFilterIndex:
+                                    model.setSelectedFilterIndex,
+                                setShowBottomSheet: model.setShowBottomSheet))
+                        : null,
+                    body: Column(
                       children: [
-                        Row(
-                          children: [
-                            Text('Good morning',
-                                style: heading6Style.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400)),
-                            horizontalSpaceVeryTiny,
-                            SvgPicture.asset(sunIcon),
-                            const Spacer(),
-                            IconButton(
-                                onPressed: model.setShowNoteView,
-                                icon: SvgPicture.asset(noteIcon))
-                          ],
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 18.0,
+                          ),
+                          height: screenHeight * 0.20,
+                          decoration: const BoxDecoration(
+                            color: kcPrimaryColor,
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(30),
+                                bottomRight: Radius.circular(30)),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text('Good morning',
+                                      style: heading6Style.copyWith(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400)),
+                                  horizontalSpaceVeryTiny,
+                                  SvgPicture.asset(sunIcon),
+                                  const Spacer(),
+                                  IconButton(
+                                      onPressed: model.setShowNoteView,
+                                      icon: SvgPicture.asset(noteIcon))
+                                ],
+                              ),
+                              Text('Protector',
+                                  style: heading6Style.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600)),
+                            ],
+                          ),
                         ),
-                        Text('Protector',
-                            style: heading6Style.copyWith(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600)),
+                        verticalSpaceSmall,
+                        model.incomeAndExpenses.isEmpty
+                            ? SizedBox(
+                                height: screenHeiht(context) * 0.6,
+                                child: const NoItem(
+                                  text: noItemText,
+                                ),
+                              )
+                            : Column(
+                                children: [
+                                  Container(
+                                    alignment: Alignment.centerRight,
+                                    padding: const EdgeInsets.only(right: 38),
+                                    width: double.infinity,
+                                    child: IconButton(
+                                        onPressed: model.setShowBottomSheet,
+                                        icon: SvgPicture.asset(filter)),
+                                  ),
+                                  verticalSpaceSmall,
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children:  [
+                                          BuildDetailsContainer(
+                                              title: totalIncomeText,
+                                              amount: model.totalIncome),
+                                          horizontalSpaceSmall,
+                                          BuildDetailsContainer(
+                                              title: totlaExpenseText,
+                                              amount: model.totalExpenses)
+                                        ],
+                                      ),
+                                      verticalSpaceSmall,
+                                      BuildDetailsContainer(
+                                          title: balanceText, amount: model.total)
+                                    ],
+                                  ),
+                                  verticalSpaceSmall,
+                                  Container(
+                                    padding: const EdgeInsets.only(bottom: 70),
+                                    height: screenHeight -
+                                        ((screenHeight * 0.20) +
+                                            290 +
+                                            MediaQuery.of(context)
+                                                .viewInsets
+                                                .bottom),
+                                    child: ListView.separated(
+                                        itemBuilder: (context, index) {
+                                          IncomeAndExpenses currentValue =
+                                              model.incomeAndExpenses[index];
+                                          return BuildInfoContainer(
+                                            price:
+                                                'N${NumberFormat('#,###.##').format(currentValue.amount)}',
+                                            description:
+                                                currentValue.description!,
+                                            category: currentValue.category!,
+                                            isExpenses:
+                                                currentValue.isExpenses!,
+                                            date: currentValue.date!,
+                                          );
+                                        },
+                                        separatorBuilder: (context, index) =>
+                                            const Divider(
+                                              thickness: 1.5,
+                                            ),
+                                        itemCount:
+                                            model.incomeAndExpenses.length),
+                                  ),
+                                ],
+                              )
                       ],
-                    ),
-                  ),
-                  verticalSpaceSmall,
-                  Container(
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.only(right: 38),
-                    width: double.infinity,
-                    child: IconButton(
-                        onPressed: model.setShowBottomSheet,
-                        icon: SvgPicture.asset(filter)),
-                  ),
-                  verticalSpaceSmall,
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          BuildDetailsContainer(
-                              title: totalIncomeText, amount: '#30,000'),
-                          horizontalSpaceSmall,
-                          BuildDetailsContainer(
-                              title: totlaExpenseText, amount: '#17,000')
-                        ],
-                      ),
-                      verticalSpaceSmall,
-                      const BuildDetailsContainer(
-                          title: balanceText, amount: '#13,000')
-                    ],
-                  ),
-                  verticalSpaceSmall,
-                  Container(
-                    padding: const EdgeInsets.only(bottom: 70),
-                    height: screenHeight - ((screenHeight * 0.20) + 290 + MediaQuery.of(context).viewInsets.bottom),
-                    child: ListView.separated(
-                        itemBuilder: (context, index) => BuildInfoContainer(
-                              price: 'N17,000',
-                              description: 'Food',
-                              category: 'Expense',
-                              date: DateFormat('dd MMM, yyyy     hh:mm')
-                                  .format(DateTime.now()),
-                            ),
-                        separatorBuilder: (context, index) => const Divider(
-                              thickness: 1.5,
-                            ),
-                        itemCount: 6),
-                  )
-                ],
-              )),
-        );
+                    )),
+              );
       },
     );
   }
 }
-
-
-
-
 
 class BuildFab extends StatelessWidget {
   final HomeViewModel model;
@@ -157,7 +191,10 @@ class BuildFab extends StatelessWidget {
                     child: FabContainer(
                       text: addNotesText,
                       onTap: () {
-                        Navigator.of(context).push(CupertinoPageRoute(builder: (context)=> const AddNoteView()));
+                        Navigator.of(context).push(CupertinoPageRoute(
+                            builder: (context) => AddNoteView(
+                                  model: model,
+                                )));
                       },
                     )),
                 verticalSpaceVeryTiny,
@@ -166,7 +203,9 @@ class BuildFab extends StatelessWidget {
                     child: FabContainer(
                       text: addExpenseText,
                       onTap: () {
-                        Navigator.of(context).push(CupertinoPageRoute(builder: (context)=> const AddIncomeOrExpensesView(isIncome: false)));
+                        Navigator.of(context).push(CupertinoPageRoute(
+                            builder: (context) =>  AddIncomeOrExpensesView(
+                                isExpenses: true)));
                       },
                     )),
                 verticalSpaceVeryTiny,
@@ -175,7 +214,9 @@ class BuildFab extends StatelessWidget {
                     child: FabContainer(
                       text: addIncomeText,
                       onTap: () {
-                        Navigator.of(context).push(CupertinoPageRoute(builder: (context)=> const AddIncomeOrExpensesView(isIncome: true)));
+                        Navigator.of(context).push(CupertinoPageRoute(
+                            builder: (context) =>
+                                 AddIncomeOrExpensesView(isExpenses: false)));
                       },
                     )),
                 verticalSpaceVeryTiny,
@@ -197,7 +238,8 @@ class BuildFab extends StatelessWidget {
 }
 
 class BuildDetailsContainer extends StatelessWidget {
-  final String title, amount;
+  final String title;
+  final double  amount;
   const BuildDetailsContainer(
       {Key? key, required this.title, required this.amount})
       : super(key: key);
@@ -219,11 +261,16 @@ class BuildDetailsContainer extends StatelessWidget {
                   color: Colors.white,
                   fontSize: 12,
                   fontWeight: FontWeight.w400)),
-          Text(amount,
-              style: heading6Style.copyWith(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600))
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            child: Text('N${NumberFormat('#,###').format(amount)}',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+                style: heading6Style.copyWith(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600)),
+          )
         ],
       ),
     );
@@ -232,14 +279,14 @@ class BuildDetailsContainer extends StatelessWidget {
 
 class BuildInfoContainer extends StatelessWidget {
   final String date, category, description, price;
-  final bool isIncome;
+  final bool isExpenses;
   const BuildInfoContainer(
       {Key? key,
       required this.date,
       required this.category,
       required this.description,
       required this.price,
-      this.isIncome = true})
+      this.isExpenses = false})
       : super(key: key);
 
   @override
@@ -251,29 +298,45 @@ class BuildInfoContainer extends StatelessWidget {
         children: [
           Text(date,
               style: heading6Style.copyWith(
-                fontSize: 12,
+                fontSize: 14,
                 fontWeight: FontWeight.w500,
               )),
           verticalSpaceSmall,
           Row(
             children: [
-              Text(category,
-                  style: heading6Style.copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: isIncome ? kcSecondaryColor : kcPrimaryColor)),
-              horizontalSpaceMedium,
-              Text(description,
-                  style: heading6Style.copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: isIncome ? kcSecondaryColor : kcPrimaryColor)),
+              Container(
+                alignment: Alignment.centerLeft,
+                width: screenWidth(context) * 0.2,
+                child: Text(category,
+                    style: heading6Style.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: isExpenses ? kcSecondaryColor : kcPrimaryColor)),
+              ),
+              horizontalSpaceSmall,
+              Container(
+                alignment: Alignment.centerLeft,
+                width: screenWidth(context) * 0.3,
+                child: Text(description,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                    style: heading6Style.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: isExpenses ? kcSecondaryColor : kcPrimaryColor)),
+              ),
               const Spacer(),
-              Text(price,
-                  style: heading6Style.copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: isIncome ? kcSecondaryColor : kcPrimaryColor))
+              SizedBox(
+                width: screenWidth(context) * 0.2,
+                child: Text(
+                  price,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                    style: heading6Style.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: isExpenses ? kcSecondaryColor : kcPrimaryColor)),
+              )
             ],
           )
         ],
@@ -305,35 +368,6 @@ class FabContainer extends StatelessWidget {
             style: heading6Style.copyWith(color: Colors.white, fontSize: 13),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class BuildNoItemContainer extends StatelessWidget {
-  const BuildNoItemContainer({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 35),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SvgPicture.asset(noItemSvg),
-          verticalSpaceMedium,
-          Text(noItemText,
-              style: heading6Style.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-              ),
-              textAlign: TextAlign.center),
-          BoxButton(
-            title: noItemButtonText,
-            onTap: () {},
-          )
-        ],
       ),
     );
   }

@@ -48,7 +48,8 @@ const String lastMonthText =  'Last Month';
 const String addNotesText = 'Add Notes';
 const String addIncomeText = 'Add Income';
 const String addExpenseText = 'Add Expenses';
-const String noItemText = 'There are no income or expense to track';
+const String noItemText = 'There are no income or expense to track. Please click on the add button to add income or expenses.';
+const String noItemBudgetText = 'There are no budget to track. Please click on the add button to add budget.';
 const String noItemButtonText = 'Create A Budget';
 const String incomeText = 'Income';
 const String expenseText = 'Expenses';
@@ -76,3 +77,27 @@ const String changeDefaultCurrencyText = 'Change Default Currency';
 const String defaultText = 'default';
 const String darkText = 'Dark';
 const String lightText = 'Light';
+const String dbName = 'money_management.db';
+const String noteTableName = 'Notes';
+const String incomeAndExpensesTableName = 'Income_And_Expenses';
+const String budgetTableName = 'Budget';
+const String noNoteText = 'There\'s No Note to display';
+const String noNoteButtonText = 'Create A Note';
+const List<String> incomeCategory = [
+    'Salary',
+    'Business',
+    'Investment Return',
+    'Cash Gift',
+    'Others'
+  ];
+const List<String> expensesCategory = [
+    'Rent',
+    'Food',
+    'Health',
+    'Data',
+    'Entertainment',
+    'Clothing',
+    'Electricity',
+    'Transportation',
+    'Others'
+  ];
