@@ -21,6 +21,9 @@ class ReportView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ReportViewModel>.reactive(
       viewModelBuilder: () => ReportViewModel(),
+      onModelReady: (model) async {
+        await model.init();
+      },
       builder: (
         BuildContext context,
         ReportViewModel model,
@@ -135,6 +138,8 @@ class BuildExpensesContainer extends StatelessWidget {
     Color.fromRGBO(120, 120, 120, 1),
     Color.fromRGBO(172, 46, 183, 1),
     Color.fromRGBO(210, 103, 103, 1),
+    Colors.pink,
+    Colors.cyan
   ];
   @override
   Widget build(BuildContext context) {
@@ -144,26 +149,26 @@ class BuildExpensesContainer extends StatelessWidget {
           SizedBox(
             height: screenHeiht(context) * 0.30,
             child: Stack(
+              clipBehavior: Clip.none,
               children: [
-                  Center(
-                  child: SizedBox(
-                    width: screenWidth(context) * 0.2,
-                    child:   Text(
-                      'N${NumberFormat('#,###').format(model.expensesTotal)}', 
+                Center(
+                    child: SizedBox(
+                  width: screenWidth(context) * 0.2,
+                  child: Text(
+                      'N${NumberFormat('#,###').format(model.expensesTotal)}',
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
                       style: heading6Style),
-                  )
-                ),
+                )),
                 SizedBox(
                   height: screenHeiht(context) * 0.30,
                   child: PieChart(PieChartData(
                       sectionsSpace: 0.5,
                       centerSpaceRadius: screenHeiht(context) * 0.1,
-                      pieTouchData: PieTouchData(
-                          touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                      pieTouchData: PieTouchData(touchCallback:
+                          (FlTouchEvent event, pieTouchResponse) {
                         if (!event.isInterestedForInteractions ||
                             pieTouchResponse == null ||
                             pieTouchResponse.touchedSection == null) {
@@ -171,45 +176,100 @@ class BuildExpensesContainer extends StatelessWidget {
 
                           return;
                         }
-                        model.setExpensesTouchIndex(
-                            pieTouchResponse.touchedSection!.touchedSectionIndex);
+                        model.setExpensesTouchIndex(pieTouchResponse
+                            .touchedSection!.touchedSectionIndex);
                       }),
                       sections: [
                         PieChartSectionData(
-                          radius: model.isExpensesPieChartTouched(0) ? 60 : 30,
+                            radius:
+                                model.isExpensesPieChartTouched(0) ? 60 : 30,
                             color: colors[0],
                             showTitle: false,
-                            value: (model.expensesAmount[0] / model.expensesTotal) * 100),
+                            value: model.expensesAmount[0] == 0
+                                ? 1
+                                : (model.expensesAmount[0] /
+                                        model.expensesTotal) *
+                                    100),
                         PieChartSectionData(
-                          radius: model.isExpensesPieChartTouched(1) ? 60 : 30,
+                            radius:
+                                model.isExpensesPieChartTouched(1) ? 60 : 30,
                             color: colors[1],
                             showTitle: false,
-                            value: (model.expensesAmount[1] / model.expensesTotal) * 100),
-                            PieChartSectionData(
-                          radius: model.isExpensesPieChartTouched(2) ? 60 : 30,
+                            value: model.expensesAmount[1] == 0
+                                ? 1
+                                : (model.expensesAmount[1] /
+                                        model.expensesTotal) *
+                                    100),
+                        PieChartSectionData(
+                            radius:
+                                model.isExpensesPieChartTouched(2) ? 60 : 30,
                             color: colors[2],
                             showTitle: false,
-                            value: (model.expensesAmount[2] / model.expensesTotal) * 100),
-                            PieChartSectionData(
-                          radius: model.isExpensesPieChartTouched(3) ? 60 : 30,
+                            value: model.expensesAmount[2] == 0
+                                ? 1
+                                : (model.expensesAmount[2] /
+                                        model.expensesTotal) *
+                                    100),
+                        PieChartSectionData(
+                            radius:
+                                model.isExpensesPieChartTouched(3) ? 60 : 30,
                             color: colors[3],
                             showTitle: false,
-                            value: (model.expensesAmount[3] / model.expensesTotal) * 100),
-                            PieChartSectionData(
-                          radius: model.isExpensesPieChartTouched(4) ? 60 : 30,
+                            value: model.expensesAmount[3] == 0
+                                ? 1
+                                : (model.expensesAmount[3] /
+                                        model.expensesTotal) *
+                                    100),
+                        PieChartSectionData(
+                            radius:
+                                model.isExpensesPieChartTouched(4) ? 60 : 30,
                             color: colors[4],
                             showTitle: false,
-                            value: (model.expensesAmount[4] / model.expensesTotal) * 100),
-                            PieChartSectionData(
-                          radius: model.isExpensesPieChartTouched(5) ? 60 : 30,
+                            value: model.expensesAmount[4] == 0
+                                ? 1
+                                : (model.expensesAmount[4] /
+                                        model.expensesTotal) *
+                                    100),
+                        PieChartSectionData(
+                            radius:
+                                model.isExpensesPieChartTouched(5) ? 60 : 30,
                             color: colors[5],
                             showTitle: false,
-                            value: (model.expensesAmount[5] / model.expensesTotal) * 100),
-                            PieChartSectionData(
-                          radius: model.isExpensesPieChartTouched(6) ? 60 : 30,
+                            value: model.expensesAmount[5] == 0
+                                ? 1
+                                : (model.expensesAmount[5] /
+                                        model.expensesTotal) *
+                                    100),
+                        PieChartSectionData(
+                            radius:
+                                model.isExpensesPieChartTouched(6) ? 60 : 30,
                             color: colors[6],
                             showTitle: false,
-                            value: (model.expensesAmount[6] / model.expensesTotal) * 100),
+                            value: model.expensesAmount[6] == 0
+                                ? 1
+                                : (model.expensesAmount[6] /
+                                        model.expensesTotal) *
+                                    100),
+                        PieChartSectionData(
+                            radius:
+                                model.isExpensesPieChartTouched(7) ? 60 : 30,
+                            color: colors[7],
+                            showTitle: false,
+                            value: model.expensesAmount[7] == 0
+                                ? 1
+                                : (model.expensesAmount[7] /
+                                        model.expensesTotal) *
+                                    100),
+                        PieChartSectionData(
+                            radius:
+                                model.isExpensesPieChartTouched(8) ? 60 : 30,
+                            color: colors[8],
+                            showTitle: false,
+                            value: model.expensesAmount[8] == 0
+                                ? 1
+                                : (model.expensesAmount[8] /
+                                        model.expensesTotal) *
+                                    100),
                       ])),
                 ),
               ],
@@ -217,34 +277,36 @@ class BuildExpensesContainer extends StatelessWidget {
           ),
           verticalSpaceVeryTiny,
           SizedBox(
-            height: screenHeiht(context) * 0.3,
+            height: screenHeiht(context) * 0.31,
             child: Padding(
-              padding: const EdgeInsets.only(left: 23, right: 23, bottom: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ChartIndicator(color: colors[0], amount: model.expensesAmount[0], value: 'Rant'),
-                  ChartIndicator(color: colors[1], amount: model.expensesAmount[1], value: 'Food'),
-                  ChartIndicator(color: colors[2], amount: model.expensesAmount[2], value: 'Health'),
-                  ChartIndicator(color: colors[3], amount: model.expensesAmount[3], value: 'Data'),
-                  ChartIndicator(color: colors[4], amount: model.expensesAmount[4], value: 'Entertainment'),
-                  ChartIndicator(color: colors[5], amount: model.expensesAmount[5], value: 'Clothing'),
-                  ChartIndicator(color: colors[6], amount: model.expensesAmount[6], value: 'Other'),
-                ],
-              ),
-              ),
+                padding: const EdgeInsets.only(left: 23, right: 23, bottom: 10),
+                child: ListView.separated(
+                    itemBuilder: (context, index) => ChartIndicator(
+                        color: colors[index],
+                        amount: model.expensesAmount[index],
+                        value: expensesCategory[index]),
+                    separatorBuilder: (context, _) => const SizedBox(
+                          height: 10,
+                        ),
+                    itemCount: expensesCategory.length)),
           )
         ],
       ),
     );
-
   }
 }
 
 class BuildIncomeContainer extends StatelessWidget {
   final ReportViewModel model;
-  const BuildIncomeContainer({Key? key, required this.model}) : super(key: key);
+  BuildIncomeContainer({Key? key, required this.model}) : super(key: key);
+
+  final List<Color> colors = [
+    const Color.fromRGBO(82, 216, 88, 1),
+    const Color.fromRGBO(210, 103, 103, 1),
+    const Color.fromRGBO(47, 115, 218, 1),
+    const Color.fromRGBO(172, 46, 183, 1),
+    Colors.cyan,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -255,25 +317,24 @@ class BuildIncomeContainer extends StatelessWidget {
             height: screenHeiht(context) * 0.30,
             child: Stack(
               children: [
-                  Center(
-                  child: SizedBox(
-                    width: screenWidth(context) * 0.2,
-                    child: Text(
-                      'N${NumberFormat('#,###').format(model.incomeTotal)}', 
+                Center(
+                    child: SizedBox(
+                  width: screenWidth(context) * 0.2,
+                  child: Text(
+                      'N${NumberFormat('#,###').format(model.incomeTotal)}',
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
                       style: heading6Style),
-                  )
-                ),
+                )),
                 SizedBox(
                   height: screenHeiht(context) * 0.30,
                   child: PieChart(PieChartData(
                       sectionsSpace: 0.5,
                       centerSpaceRadius: screenHeiht(context) * 0.10,
-                      pieTouchData: PieTouchData(
-                          touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                      pieTouchData: PieTouchData(touchCallback:
+                          (FlTouchEvent event, pieTouchResponse) {
                         if (!event.isInterestedForInteractions ||
                             pieTouchResponse == null ||
                             pieTouchResponse.touchedSection == null) {
@@ -281,30 +342,50 @@ class BuildIncomeContainer extends StatelessWidget {
 
                           return;
                         }
-                        model.setIncomeTouchIndex(
-                            pieTouchResponse.touchedSection!.touchedSectionIndex);
+                        model.setIncomeTouchIndex(pieTouchResponse
+                            .touchedSection!.touchedSectionIndex);
                       }),
                       sections: [
                         PieChartSectionData(
-                          radius: model.isIncomePieChartTouched(0) ? 60 : 30,
-                            color: const Color.fromRGBO(82, 216, 88, 1),
+                            radius: model.isIncomePieChartTouched(0) ? 60 : 30,
+                            color: colors[0],
                             showTitle: false,
-                            value: (model.incomeAmount[0] / model.incomeTotal) * 100),
+                            value: model.incomeAmount[0] == 0
+                                ? 1
+                                : (model.incomeAmount[0] / model.incomeTotal) *
+                                    100),
                         PieChartSectionData(
-                          radius: model.isIncomePieChartTouched(1) ? 60 : 30,
-                            color: const Color.fromRGBO(210, 103, 103, 1),
+                            radius: model.isIncomePieChartTouched(1) ? 60 : 30,
+                            color: colors[1],
                             showTitle: false,
-                            value: (model.incomeAmount[1] / model.incomeTotal) * 100),
-                            PieChartSectionData(
-                          radius: model.isIncomePieChartTouched(2) ? 60 : 30,
-                            color: const Color.fromRGBO(47, 115, 218, 1),
+                            value: model.incomeAmount[1] == 0
+                                ? 1
+                                : (model.incomeAmount[1] / model.incomeTotal) *
+                                    100),
+                        PieChartSectionData(
+                            radius: model.isIncomePieChartTouched(2) ? 60 : 30,
+                            color: colors[2],
                             showTitle: false,
-                            value: (model.incomeAmount[2] / model.incomeTotal) * 100),
-                            PieChartSectionData(
-                          radius: model.isIncomePieChartTouched(3) ? 60 : 30,
-                            color: const Color.fromRGBO(172, 46, 183, 1),
+                            value: model.incomeAmount[2] == 0
+                                ? 1
+                                : (model.incomeAmount[2] / model.incomeTotal) *
+                                    100),
+                        PieChartSectionData(
+                            radius: model.isIncomePieChartTouched(3) ? 60 : 30,
+                            color: colors[3],
                             showTitle: false,
-                            value: (model.incomeAmount[3] / model.incomeTotal) * 100),
+                            value: model.incomeAmount[3] == 0
+                                ? 1
+                                : (model.incomeAmount[3] / model.incomeTotal) *
+                                    100),
+                        PieChartSectionData(
+                            radius: model.isIncomePieChartTouched(4) ? 60 : 30,
+                            color: colors[4],
+                            showTitle: false,
+                            value: model.incomeAmount[4] == 0
+                                ? 1
+                                : (model.incomeAmount[4] / model.incomeTotal) *
+                                    100),
                       ])),
                 ),
               ],
@@ -312,19 +393,18 @@ class BuildIncomeContainer extends StatelessWidget {
           ),
           verticalSpaceVeryTiny,
           SizedBox(
-            height: screenHeiht(context) * 0.2,
+            height: screenHeiht(context) * 0.3,
             child: Padding(
-              padding: const EdgeInsets.only(left: 23, right: 23, bottom: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ChartIndicator(color: const Color.fromRGBO(82, 216, 88, 1), amount: model.incomeAmount[0], value: 'Salary'),
-                  ChartIndicator(color: const Color.fromRGBO(210, 103, 103, 1), amount: model.incomeAmount[1], value: 'Business'),
-                  ChartIndicator(color: const Color.fromRGBO(47, 115, 218, 1), amount: model.incomeAmount[2], value: 'Crypto Investment'),
-                  ChartIndicator(color: const Color.fromRGBO(172, 46, 183, 1), amount: model.incomeAmount[3], value: 'Cash Gift'),
-                ],
-              ),
-              ),
+                padding: const EdgeInsets.only(left: 23, right: 23, bottom: 10),
+                child: ListView.separated(
+                    itemBuilder: (context, index) => ChartIndicator(
+                        color: colors[index],
+                        amount: model.incomeAmount[index],
+                        value: incomeCategory[index]),
+                    separatorBuilder: (context, index) => const SizedBox(
+                          height: 12,
+                        ),
+                    itemCount: incomeCategory.length)),
           )
         ],
       ),

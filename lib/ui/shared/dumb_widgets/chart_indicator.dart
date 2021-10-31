@@ -6,7 +6,7 @@ import 'package:money_management/ui/shared/const_ui_helper.dart';
 
 class ChartIndicator extends StatelessWidget {
   final Color color;
-  final int amount;
+  final double amount;
   final String value;
   const ChartIndicator(
       {Key? key,
@@ -31,7 +31,7 @@ class ChartIndicator extends StatelessWidget {
       const Spacer(),
       SizedBox(
         width: screenWidth(context) * 0.3,
-        child: Text('N${NumberFormat('#,###').format(amount)}',
+        child: Text('N${NumberFormat('#,###.##').format(amount)}',
             maxLines: 2,
             textAlign: TextAlign.right,
             overflow: TextOverflow.ellipsis,

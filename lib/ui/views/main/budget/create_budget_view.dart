@@ -10,19 +10,37 @@ import 'budget_view_model.dart';
 
 class CreateBudgetView extends StatelessWidget {
   final BudgetViewModel model;
-  const CreateBudgetView({Key? key, required this.model,}) : super(key: key);
+  CreateBudgetView({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
+  final _amountFocusNode = FocusNode();
+  final _descriptionFocusNode = FocusNode();
+
+  onDispose() {
+    _amountFocusNode.dispose();
+    _descriptionFocusNode.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-                      onPressed: model.setShowCreateBudget,
-                      icon: const Icon(Icons.arrow_back, color: Colors.black,)),
-       title:  Text(
-                    budgetText,
-                    style: heading6Style.copyWith(color: Colors.black,),
-                  ),
+            onPressed: (){
+              model.setShowCreateBudget();
+              onDispose();
+              },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            )),
+        title: Text(
+          budgetText,
+          style: heading6Style.copyWith(
+            color: Colors.black,
+          ),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -41,6 +59,8 @@ class CreateBudgetView extends StatelessWidget {
                     children: [
                       BoxInputField(
                           label: 'Amount',
+                          onChanged: model.setAmount,
+                          focusNode: _amountFocusNode,
                           keyboardType: TextInputType.number),
                       verticalSpaceVeryTiny,
                       BuildLabelContainer(
@@ -51,6 +71,10 @@ class CreateBudgetView extends StatelessWidget {
                             value: model.categoryValue,
                             underline: null,
                             isExpanded: true,
+                            onTap: (){
+                              _amountFocusNode.unfocus();
+                              _descriptionFocusNode.unfocus();
+                            },
                             onChanged: model.setCategoryValue,
                             menuMaxHeight: 250,
                             items: model.category
@@ -59,12 +83,10 @@ class CreateBudgetView extends StatelessWidget {
                                           value: value,
                                           child: Text(
                                             value,
-                                            style:
-                                                heading6Style.copyWith(
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.w400,
-                                                    color: kcNeutral2),
+                                            style: heading6Style.copyWith(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400,
+                                                color: kcNeutral2),
                                           ),
                                         ))
                                 .toList(),
@@ -73,30 +95,40 @@ class CreateBudgetView extends StatelessWidget {
                       ),
                       verticalSpaceVeryTiny,
                       GestureDetector(
-                          onTap: () => showDatePicker(
+                          onTap: (){
+                            _amountFocusNode.unfocus();
+                            _descriptionFocusNode.unfocus();
+                            showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime.utc(2020),
                                   lastDate: DateTime.utc(2100))
                               .then((value) => model.setDate(
-                                  DateFormat('dd MMM, yyyy')
-                                      .format(value!))).onError((error, stackTrace) => null),
+                                  DateFormat('dd MMM, yyyy').format(value!)))
+                              .onError((error, stackTrace) => null);},
                           child: BuildLabelContainer(
                               label: 'Date',
                               child: Text(
                                 model.date,
                                 style: heading6Style.copyWith(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: kcNeutral2),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: kcNeutral2),
                               ))),
                       verticalSpaceVeryTiny,
                       BoxInputField(
                         label: 'Description',
                         maxLines: 5,
+                        onChanged: model.setDescription,
                       ),
                       verticalSpaceMedium,
-                      BoxButton(title: 'Save', onTap: () {})
+                      BoxButton(
+                          title: 'Save',
+                          isBusy: model.isBusy,
+                          onTap:(){
+                            model.createBudget;
+                            model.dispose();
+                            })
                     ],
                   )),
                 ),
