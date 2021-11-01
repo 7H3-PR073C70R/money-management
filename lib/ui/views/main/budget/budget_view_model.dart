@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:money_management/constants/app_string.dart';
 import 'package:money_management/model/budget_model.dart';
 import 'package:money_management/service/db_service.dart';
@@ -7,6 +8,13 @@ class BudgetViewModel extends BaseViewModel {
   /// the current index of the first five list shown in the view.
   int _currentIndex = 1;
 
+  /// to know the state to  put the view in. It's true initial since the view is busy
+  /// immediately it come into display
+  
+  bool _isBusy = true;
+
+  @override
+  bool get isBusy => _isBusy;
   /// To know if the createbudget view is to shown or not.
   bool _showCreateBudget = false;
 
@@ -29,8 +37,8 @@ class BudgetViewModel extends BaseViewModel {
   String _categoryValue = '<None>';
   get categoryValue => _categoryValue;
 
-  String _date = '';
-  String get date => _date;
+  DateTime? _date;
+  String get date => _date != null ? DateFormat('dd MMM, yyyy').format(_date!) : '';
 
   String _amount = '';
   String _description = '';
@@ -47,8 +55,14 @@ class BudgetViewModel extends BaseViewModel {
     final List<dynamic> result = await DataBaseService.instance
         .readAll(obj: budget, table: budgetTableName);
     _budgets = result.cast<Budget>();
-    _budgetsToDisplay = _budgets.length < 5 ? _budgets : _budgets.sublist(0, 5);
+    _budgetsToDisplay = getbudgetsToDisplay();
+    await Future.delayed(const Duration(milliseconds: 50));
+    _isBusy = false;
     notifyListeners();
+  }
+
+  List<Budget> getbudgetsToDisplay() {
+    return _budgets.length < 5 ? _budgets : _budgets.sublist(0, 5);
   }
 
   int get remainder {
@@ -88,7 +102,7 @@ class BudgetViewModel extends BaseViewModel {
   }
 
   /// This method set the date
-  void setDate(String value) {
+  void setDate(DateTime value) {
     _date = value;
     notifyListeners();
   }
@@ -119,12 +133,21 @@ class BudgetViewModel extends BaseViewModel {
         description: _description,
         date: _date,
         amount: double.parse(_amount));
-    final result = await runBusyFuture(DataBaseService.instance.create(
-        obj: budget,
-        table: budgetTableName));
+    final result = await runBusyFuture(
+        DataBaseService.instance.create(obj: budget, table: budgetTableName));
     budget = result as Budget;
     _budgets.insert(0, budget);
-    _showCreateBudget = !_showCreateBudget;
+
+    // update the budgets to display list
+    _budgetsToDisplay = getbudgetsToDisplay();
+
+    // show the budget view instead of the create.
+    setShowCreateBudget();
+    // set [_date] to an empty string in case of immediate nex entry
+    _date = null;
+
+    // set [_categoryValue] to it initial value in case of immediate nex entry
+    _categoryValue = _category[0];
     notifyListeners();
   }
 }

@@ -32,7 +32,7 @@ class ForgetPasswordView extends StatelessWidget {
                   verticalSpaceSmall,
                   Text(getResetLinkText, style: heading6Style.copyWith(fontSize: 16), textAlign: TextAlign.center,),
                   verticalSpaceLarge,
-                  BoxInputField(placeHolder: emailPlaceHolderText),
+                  const BoxInputField(placeHolder: emailPlaceHolderText),
                   verticalSpaceMedium,
                   BoxButton(title: resetPasswordButtonText, onTap: (){},)
                 ],

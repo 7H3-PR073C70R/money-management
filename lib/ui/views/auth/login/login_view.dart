@@ -42,7 +42,7 @@ class LoginView extends StatelessWidget {
                           style: heading6Style.copyWith(color: kcNeutral3),
                         ),
                         verticalSpaceExtraLarge,
-                        BoxInputField(placeHolder: emailPlaceHolderText),
+                        const BoxInputField(placeHolder: emailPlaceHolderText),
                         verticalSpaceMedium,
                         BoxInputField(
                           placeHolder: passwordPlaceHolder,

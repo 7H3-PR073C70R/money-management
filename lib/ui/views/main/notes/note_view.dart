@@ -1,6 +1,7 @@
 import 'package:box_ui/box_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:money_management/constants/app_string.dart';
 import 'package:money_management/ui/shared/const_color_helper.dart';
 import 'package:money_management/ui/shared/const_ui_helper.dart';
@@ -40,10 +41,16 @@ class NoteView extends StatelessWidget {
                 ),
               ),
               actions: [
+                if(model.showSearchFieldForNote)
+                SizedBox(width: screenWidth(context) * 0.5,
+                child: BoxInputField(
+                  onChanged: model.setNoteQuery,
+                ),
+                ),
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.search,
+                  onPressed: model.setShowSearchField,
+                  icon:  Icon(
+                    model.showSearchFieldForNote ? Icons.close : Icons.search,
                     color: Colors.black,
                   ),
                 )
@@ -81,7 +88,9 @@ class NoteView extends StatelessWidget {
                                   Row(
                                     children: [
                                       Text(
-                                        model.notes[index].date ?? 'No Date',
+                                        DateFormat(
+                                                'd${model.dateSuffix()} MMM, yyyy  h:mma')
+                                            .format(model.notes[index].date!),
                                         style: heading6Style.copyWith(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w400),

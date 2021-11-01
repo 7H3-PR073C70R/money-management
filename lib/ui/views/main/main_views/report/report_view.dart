@@ -72,7 +72,7 @@ class ReportView extends StatelessWidget {
                   ),
                 ),
                 verticalSpaceSmall,
-                model.currentPageIndex == 0
+                model.isBusy ? SizedBox(height: screenHeiht(context) * 0.6,child: const Center(child:  CircularProgressIndicator(),)) : model.currentPageIndex == 0
                     ? BuildIncomeContainer(model: model)
                     : BuildExpensesContainer(model: model)
               ],

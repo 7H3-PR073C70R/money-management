@@ -27,7 +27,7 @@ class BuildBottomSheet extends StatelessWidget {
   ];
 
   String getMonth() {
-    final int _currentMonthIndex = DateTime.now().month;
+    final int _currentMonthIndex = DateTime.now().month - 1;
     switch (_currentMonthIndex) {
       case 1:
         return 'Jan 1 - 31';

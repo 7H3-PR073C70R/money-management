@@ -91,78 +91,91 @@ class HomeView extends StatelessWidget {
                           ),
                         ),
                         verticalSpaceSmall,
-                        model.incomeAndExpenses.isEmpty
+                        model.isBusy
                             ? SizedBox(
                                 height: screenHeiht(context) * 0.6,
-                                child: const NoItem(
-                                  text: noItemText,
-                                ),
-                              )
-                            : Column(
-                                children: [
-                                  Container(
-                                    alignment: Alignment.centerRight,
-                                    padding: const EdgeInsets.only(right: 38),
-                                    width: double.infinity,
-                                    child: IconButton(
-                                        onPressed: model.setShowBottomSheet,
-                                        icon: SvgPicture.asset(filter)),
-                                  ),
-                                  verticalSpaceSmall,
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                child: const Center(
+                                  child: CircularProgressIndicator(),
+                                ))
+                            : model.incomeAndExpenses.isEmpty
+                                ? SizedBox(
+                                    height: screenHeiht(context) * 0.6,
+                                    child: const NoItem(
+                                      text: noItemText,
+                                    ),
+                                  )
+                                : Column(
                                     children: [
-                                      Row(
+                                      Container(
+                                        alignment: Alignment.centerRight,
+                                        padding:
+                                            const EdgeInsets.only(right: 38),
+                                        width: double.infinity,
+                                        child: IconButton(
+                                            onPressed: model.setShowBottomSheet,
+                                            icon: SvgPicture.asset(filter)),
+                                      ),
+                                      verticalSpaceSmall,
+                                      Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children:  [
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              BuildDetailsContainer(
+                                                  title: totalIncomeText,
+                                                  amount: model.totalIncome),
+                                              horizontalSpaceSmall,
+                                              BuildDetailsContainer(
+                                                  title: totlaExpenseText,
+                                                  amount: model.totalExpenses)
+                                            ],
+                                          ),
+                                          verticalSpaceSmall,
                                           BuildDetailsContainer(
-                                              title: totalIncomeText,
-                                              amount: model.totalIncome),
-                                          horizontalSpaceSmall,
-                                          BuildDetailsContainer(
-                                              title: totlaExpenseText,
-                                              amount: model.totalExpenses)
+                                              title: balanceText,
+                                              amount: model.total)
                                         ],
                                       ),
                                       verticalSpaceSmall,
-                                      BuildDetailsContainer(
-                                          title: balanceText, amount: model.total)
+                                      Container(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 70),
+                                        height: screenHeight -
+                                            ((screenHeight * 0.20) +
+                                                290 +
+                                                MediaQuery.of(context)
+                                                    .viewInsets
+                                                    .bottom),
+                                        child: ListView.separated(
+                                            itemBuilder: (context, index) {
+                                              IncomeAndExpenses currentValue =
+                                                  model
+                                                      .incomeAndExpenses[index];
+                                              return BuildInfoContainer(
+                                                price:
+                                                    'N${NumberFormat('#,###.##').format(currentValue.amount)}',
+                                                description:
+                                                    currentValue.description!,
+                                                category:
+                                                    currentValue.category!,
+                                                isExpenses:
+                                                    currentValue.isExpenses!,
+                                                date: currentValue.date != null ? DateFormat('dd MMM, yyyy').format(currentValue.date!) : 'No Date',
+                                              );
+                                            },
+                                            separatorBuilder:
+                                                (context, index) =>
+                                                    const Divider(
+                                                      thickness: 1.5,
+                                                    ),
+                                            itemCount:
+                                                model.incomeAndExpenses.length),
+                                      ),
                                     ],
-                                  ),
-                                  verticalSpaceSmall,
-                                  Container(
-                                    padding: const EdgeInsets.only(bottom: 70),
-                                    height: screenHeight -
-                                        ((screenHeight * 0.20) +
-                                            290 +
-                                            MediaQuery.of(context)
-                                                .viewInsets
-                                                .bottom),
-                                    child: ListView.separated(
-                                        itemBuilder: (context, index) {
-                                          IncomeAndExpenses currentValue =
-                                              model.incomeAndExpenses[index];
-                                          return BuildInfoContainer(
-                                            price:
-                                                'N${NumberFormat('#,###.##').format(currentValue.amount)}',
-                                            description:
-                                                currentValue.description!,
-                                            category: currentValue.category!,
-                                            isExpenses:
-                                                currentValue.isExpenses!,
-                                            date: currentValue.date!,
-                                          );
-                                        },
-                                        separatorBuilder: (context, index) =>
-                                            const Divider(
-                                              thickness: 1.5,
-                                            ),
-                                        itemCount:
-                                            model.incomeAndExpenses.length),
-                                  ),
-                                ],
-                              )
+                                  )
                       ],
                     )),
               );
@@ -204,8 +217,8 @@ class BuildFab extends StatelessWidget {
                       text: addExpenseText,
                       onTap: () {
                         Navigator.of(context).push(CupertinoPageRoute(
-                            builder: (context) =>  AddIncomeOrExpensesView(
-                                isExpenses: true)));
+                            builder: (context) =>
+                                const AddIncomeOrExpensesView(isExpenses: true)));
                       },
                     )),
                 verticalSpaceVeryTiny,
@@ -216,7 +229,7 @@ class BuildFab extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(CupertinoPageRoute(
                             builder: (context) =>
-                                 AddIncomeOrExpensesView(isExpenses: false)));
+                               const AddIncomeOrExpensesView(isExpenses: false)));
                       },
                     )),
                 verticalSpaceVeryTiny,
@@ -239,7 +252,7 @@ class BuildFab extends StatelessWidget {
 
 class BuildDetailsContainer extends StatelessWidget {
   final String title;
-  final double  amount;
+  final double amount;
   const BuildDetailsContainer(
       {Key? key, required this.title, required this.amount})
       : super(key: key);
@@ -264,8 +277,8 @@ class BuildDetailsContainer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Text('N${NumberFormat('#,###').format(amount)}',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: heading6Style.copyWith(
                     color: Colors.white,
                     fontSize: 15,
@@ -318,8 +331,8 @@ class BuildInfoContainer extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 width: screenWidth(context) * 0.3,
                 child: Text(description,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                     style: heading6Style.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -328,10 +341,9 @@ class BuildInfoContainer extends StatelessWidget {
               const Spacer(),
               SizedBox(
                 width: screenWidth(context) * 0.2,
-                child: Text(
-                  price,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                child: Text(price,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: heading6Style.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,

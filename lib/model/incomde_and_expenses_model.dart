@@ -11,7 +11,7 @@ class IncomeAndExpenses {
   int? id;
   double? amount;
   String? category;
-  String? date;
+  DateTime? date;
   String? description;
   bool? isExpenses;
 
@@ -28,7 +28,7 @@ class IncomeAndExpenses {
     int? id,
     double? amount,
     String? category,
-    String? date,
+    DateTime? date,
     String? description,
     bool? isExpenses,
   }) {
@@ -46,7 +46,7 @@ class IncomeAndExpenses {
        id: json[IncomeAndExpensesField.id],
       amount: json[IncomeAndExpensesField.amount],
       category: json[IncomeAndExpensesField.category],
-      date: json[IncomeAndExpensesField.date],
+      date: DateTime.tryParse(json[IncomeAndExpensesField.date]),
       description: json[IncomeAndExpensesField.description],
       isExpenses: json[IncomeAndExpensesField.isExpenses]  == 1 ? true : false
     );
@@ -56,7 +56,7 @@ class IncomeAndExpenses {
     IncomeAndExpensesField.id: id,
     IncomeAndExpensesField.amount: amount,
     IncomeAndExpensesField.category: category,
-    IncomeAndExpensesField.date: date,
+    IncomeAndExpensesField.date: date!.toIso8601String(),
     IncomeAndExpensesField.description: description,
     IncomeAndExpensesField.isExpenses: isExpenses! ? 1 : 0
   };

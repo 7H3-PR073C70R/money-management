@@ -8,7 +8,7 @@ class NoteField {
 class Note {
   int? id;
   String? title;
-  String? date;
+  DateTime? date;
   String? text;
 
 
@@ -23,7 +23,7 @@ class Note {
     int? id,
     String? title,
     String? text,
-    String? date,
+    DateTime? date,
   }) {
     return Note(
       id: id ?? this.id,
@@ -36,7 +36,7 @@ class Note {
      Note(
        id: json[NoteField.id],
       title: json[NoteField.title],
-      date: json[NoteField.date],
+      date: DateTime.tryParse(json[NoteField.date]),
       text: json[NoteField.text],
     );
   
@@ -44,7 +44,7 @@ class Note {
   Map<String, dynamic> toJson() => {
     NoteField.id: id,
     NoteField.title: title,
-    NoteField.date: date,
+    NoteField.date: date!.toIso8601String(),
     NoteField.text: text,
   };
 

@@ -48,12 +48,12 @@ class BudgetView extends StatelessWidget {
                     ),
                     centerTitle: true,
                   ),
-                  body: model.budgetsToDisplay.isEmpty ? const NoItem(text: noItemBudgetText) : SafeArea(
+                  body: model.isBusy ? SizedBox(height: screenHeiht(context) * 0.6,child: const Center(child:  CircularProgressIndicator(),)): model.budgetsToDisplay.isEmpty ? const NoItem(text: noItemBudgetText) : SafeArea(
                       child: Column(
                     children: [
                       verticalSpaceSmall,
                       Container(
-                        height: model.budgetsToDisplay.length * 66.0,
+                        height: model.budgetsToDisplay.length * 67.0,
                         constraints: BoxConstraints(
                             maxHeight: screenHeiht(context) * 0.55),
                         padding: const EdgeInsets.symmetric(horizontal: 35),

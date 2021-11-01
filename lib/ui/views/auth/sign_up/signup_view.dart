@@ -40,15 +40,15 @@ class SignUpView extends StatelessWidget {
                         child: Form(
                             child: Column(
                           children: [
-                            BoxInputField(placeHolder: firstNamePlaceHolder),
+                            const BoxInputField(placeHolder: firstNamePlaceHolder),
                             const SizedBox(
                               height: 16,
                             ),
-                            BoxInputField(placeHolder: lastNamePlaceHolder),
+                            const BoxInputField(placeHolder: lastNamePlaceHolder),
                             const SizedBox(
                               height: 16,
                             ),
-                            BoxInputField(placeHolder: emailPlaceHolderText),
+                            const BoxInputField(placeHolder: emailPlaceHolderText),
                             const SizedBox(
                               height: 16,
                             ),
