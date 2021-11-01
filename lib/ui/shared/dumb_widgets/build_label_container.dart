@@ -13,28 +13,26 @@ class BuildLabelContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Column(
-        children: [
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                label,
-                style: heading6Style.copyWith(
-                    fontSize: 16, fontWeight: FontWeight.w400, color: kcNeutral3),
-              )),
-          verticalSpaceVeryTiny,
-          Container(
-              height: 50,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: kcNeutral4)),
-              alignment: Alignment.centerLeft,
-              padding:
-                  EdgeInsets.symmetric(horizontal: screenWidth(context) * 0.05),
-              child: child)
-        ],
-      ),
+    return Column(
+      children: [
+        Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              label,
+              style: heading6Style.copyWith(
+                  fontSize: 16, fontWeight: FontWeight.w400, color: kcNeutral3),
+            )),
+        verticalSpaceVeryTiny,
+        Container(
+            height: 50,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: kcNeutral4)),
+            alignment: Alignment.centerLeft,
+            padding:
+                EdgeInsets.symmetric(horizontal: screenWidth(context) * 0.05),
+            child: child)
+      ],
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:money_management/constants/app_string.dart';
 import 'package:money_management/model/incomde_and_expenses_model.dart';
 import 'package:money_management/service/db_service.dart';
@@ -7,17 +8,16 @@ class AddIncomeOrExpensesViewModel extends BaseViewModel {
   bool _showModelBottomSheet = false;
   get showModelBottomSheet => _showModelBottomSheet;
 
-
   String _amount = '';
   String _description = '';
 
   String _category = '';
   get category => _category;
 
-  String _date = '';
-  get date => _date;
+  DateTime? _date;
+  String get date => _date != null ? DateFormat('dd MMM, yyyy').format(_date!) : '';
 
-  void setDate(String value) {
+  void setDate(DateTime value) {
     _date = value;
     notifyListeners();
   }
@@ -45,9 +45,9 @@ class AddIncomeOrExpensesViewModel extends BaseViewModel {
 
   /// This method call the [DatabaseService] to create a record inside the IncomeAndexpense table.
   void createIncomeOrExpenses(bool isExpenses) async {
-   await DataBaseService.instance.create(
+    await DataBaseService.instance.create(
         obj: IncomeAndExpenses(
-            date: _date,
+            date: DateTime(_date!.year, _date!.month, _date!.day),
             amount: double.parse(_amount),
             description: _description,
             category: _category,

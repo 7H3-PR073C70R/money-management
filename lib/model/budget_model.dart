@@ -10,22 +10,22 @@ class Budget {
   int? id;
   double? amount;
   String? category;
-  String? date;
+  DateTime? date;
   String? description;
 
   Budget(
       {
       this.id,
-      this.amount = 0,
-      this.category = 'Health',
-      this.date = 'unkonow',
-      this.description = 'fuck off'});
+      this.amount,
+      this.category,
+      this.date,
+      this.description});
 
   Budget copyWith({
     int? id,
     double? amount,
     String? category,
-    String? date,
+    DateTime? date,
     String? description,
   }) {
     return Budget(
@@ -41,7 +41,7 @@ class Budget {
        id: json[BudgetField.id],
       amount: json[BudgetField.amount],
       category: json[BudgetField.category],
-      date: json[BudgetField.date],
+      date: DateTime.tryParse(json[BudgetField.date]),
       description: json[BudgetField.description]
     );
   
@@ -50,7 +50,7 @@ class Budget {
     BudgetField.id: id,
     BudgetField.amount: amount,
     BudgetField.category: category,
-    BudgetField.date: date,
+    BudgetField.date: date!.toIso8601String(),
     BudgetField.description: description
   };
 

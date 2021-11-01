@@ -5,23 +5,32 @@ import 'package:stacked/stacked.dart';
 
 class ReportViewModel extends BaseViewModel {
   int _currentPageIndex = 0;
-  int _selectedFilterIndex = 0;
+  int _selectedFilterIndex = -1;
   bool _showBottomSheet = false;
   int _incomeTouchIndex = -1;
   int _expensesTouchIndex = -1;
+  bool _isBusy = true;
 
   int get incomeTouchIndex => _incomeTouchIndex;
   int get expensesTouchIndex => _expensesTouchIndex;
   int get currentPageIndex => _currentPageIndex;
   bool get showBottomSheet => _showBottomSheet;
   int get selectedFilterIndex => _selectedFilterIndex;
+  @override
+  bool get isBusy => _isBusy;
   bool isIncomePieChartTouched(int index) => index == _incomeTouchIndex;
   bool isExpensesPieChartTouched(int index) => index == _expensesTouchIndex;
+
+  List<IncomeAndExpenses> _incomeAndExpenses = [];
+  List<IncomeAndExpenses> _filteredIncomeAndExpenses = [];
 
   List<double> _incomeAmount = [0,0,0,0,0];
   List<double> _expensesAmount = [0,0,0,0,0,0,0,0,];
   List<double> get incomeAmount => _incomeAmount;
   List<double> get expensesAmount => _expensesAmount;
+  List<IncomeAndExpenses> get incomeAndExpenses => _selectedFilterIndex == -1
+      ? _incomeAndExpenses
+      : _filteredIncomeAndExpenses;
 
   double get incomeTotal {
     double total = 0;
@@ -57,6 +66,8 @@ class ReportViewModel extends BaseViewModel {
 
   setSelectedFilterIndex(index) {
     _selectedFilterIndex = index;
+    _filterIncomeAndExpensesListByDate(index);
+    init();
     setShowBottomSheet();
     notifyListeners();
   }
@@ -66,8 +77,8 @@ class ReportViewModel extends BaseViewModel {
     List<double> expensesAmount = [];
   
     final result = await DataBaseService.instance.readAll(obj: IncomeAndExpenses(), table: incomeAndExpensesTableName);
-   
-    final List<IncomeAndExpenses> incomeAndExpenses = result.cast<IncomeAndExpenses>();
+    _incomeAndExpenses = result.cast<IncomeAndExpenses>();
+
     final List<IncomeAndExpenses> income = incomeAndExpenses.where((expenses) => expenses.isExpenses == false).toList();
     final List<IncomeAndExpenses> expenses = incomeAndExpenses.where((income) => income.isExpenses == true).toList();
     double salary = 0;
@@ -150,9 +161,38 @@ class ReportViewModel extends BaseViewModel {
 
     _expensesAmount = expensesAmount;
     _incomeAmount = incomeAmount;
-
+    await Future.delayed(const Duration(milliseconds: 50));
+    _isBusy = false;
     notifyListeners();
-    await Future.delayed(const Duration(seconds: 2));
+  }
+
+  /// This function filtered the list of income and expenses by date and save
+  /// the result into [_filteredIncomeAndExpenses] to update the
+  void _filterIncomeAndExpensesListByDate(int index,) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = DateTime(now.year, now.month, now.day - 1 );
+    final lastWeekStart =
+        now.subtract(Duration(days: DateTime.now().weekday)).subtract(const Duration(days: 1));
+    final lastMonthStart = DateTime(now.year, now.month - 1, 1).subtract(const Duration(days: 1));
+    _filteredIncomeAndExpenses = _incomeAndExpenses.where((element) {
+      final date =
+          DateTime(element.date!.year, element.date!.month, element.date!.day);
+      switch (index) {
+        case 0:
+          return date.isAtSameMomentAs(today);
+        case 1:
+          return date.isAtSameMomentAs(yesterday);
+        case 2:
+          return date.isAfter(lastWeekStart) && date.isBefore(now);
+        case 3:
+          return date.isAfter(lastMonthStart) &&
+              date.isBefore(lastMonthStart.add(const Duration(days: 32)));
+        default:
+          return true;
+      }
+    }).toList();
+    notifyListeners();
   }
 
 }

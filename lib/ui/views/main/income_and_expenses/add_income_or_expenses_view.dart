@@ -2,7 +2,6 @@ import 'package:box_ui/box_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:money_management/constants/app_string.dart';
 import 'package:money_management/ui/shared/const_color_helper.dart';
 import 'package:money_management/ui/shared/const_ui_helper.dart';
@@ -14,19 +13,14 @@ import 'add_income_or_expenses_view_model.dart';
 
 class AddIncomeOrExpensesView extends StatelessWidget {
   final bool isExpenses;
-  AddIncomeOrExpensesView({Key? key, required this.isExpenses})
+  const AddIncomeOrExpensesView({Key? key, required this.isExpenses})
       : super(key: key);
 
-  final _amountFocusNode = FocusNode();
-  final _descriptionFocusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
+    final focusScope = FocusScope.of(context);
     return ViewModelBuilder<AddIncomeOrExpensesViewModel>.reactive(
       viewModelBuilder: () => AddIncomeOrExpensesViewModel(),
-      onDispose: (model) {
-        _amountFocusNode.dispose();
-        _descriptionFocusNode.dispose();
-      },
       builder: (
         BuildContext context,
         AddIncomeOrExpensesViewModel model,
@@ -74,14 +68,12 @@ class AddIncomeOrExpensesView extends StatelessWidget {
                       children: [
                         BoxInputField(
                             label: 'Amount',
-                            focusNode: _amountFocusNode,
                             onChanged: model.setAmount,
                             keyboardType: TextInputType.number),
                         verticalSpaceVeryTiny,
                         GestureDetector(
                           onTap: () {
-                            _amountFocusNode.unfocus();
-                            _descriptionFocusNode.unfocus();
+                            focusScope.unfocus();
                             model.setShowModelBottomSheet();
                           },
                           child: BuildLabelContainer(
@@ -97,16 +89,14 @@ class AddIncomeOrExpensesView extends StatelessWidget {
                         verticalSpaceVeryTiny,
                         GestureDetector(
                             onTap: () {
-                              _amountFocusNode.unfocus();
-                              _descriptionFocusNode.unfocus;
+                              focusScope.unfocus();
                               showDatePicker(
                                       context: context,
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime.utc(2020),
                                       lastDate: DateTime.utc(2100))
                                   .then((value) => model.setDate(
-                                      DateFormat('dd MMM, yyyy')
-                                          .format(value!)))
+                                      value!))
                                   .onError((error, stackTrace) => null);
                             },
                             child: BuildLabelContainer(
@@ -122,7 +112,6 @@ class AddIncomeOrExpensesView extends StatelessWidget {
                         BoxInputField(
                           label: 'Description',
                           onChanged: model.setDescription,
-                          focusNode: _descriptionFocusNode,
                           maxLines: 5,
                         ),
                         verticalSpaceMedium,

@@ -77,7 +77,7 @@ class ProfileSettingsView extends StatelessWidget {
                       verticalSpaceMedium,
                       Form(
                           child: Column(
-                        children: [
+                        children: const [
                           BoxInputField(
                             label: firstNameLabel,
                             placeHolder: 'Toxic',
