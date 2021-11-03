@@ -90,7 +90,7 @@ class StartUpView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
-                                  onTap: () => model.gotoLoginOrSignUP(context),
+                                  onTap: model.gotoLoginOrSignUP,
                                   child: BoxText.body(
                                     skipText,
                                     color: Colors.white,
@@ -106,7 +106,7 @@ class StartUpView extends StatelessWidget {
                               ],
                             )
                           : GestureDetector(
-                              onTap: () => model.gotoLoginOrSignUP(context),
+                              onTap:  model.gotoLoginOrSignUP,
                               child: Container(
                                 height: 52,
                                 width: 52,

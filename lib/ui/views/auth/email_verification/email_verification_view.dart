@@ -89,7 +89,7 @@ class EmailVarificationView extends StatelessWidget {
               const SizedBox(height: 16,),
                Padding(
                 padding: const  EdgeInsets.symmetric(horizontal: 35),
-                child:  BoxButton(title: verifyText, onTap: () => Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context)=> const VerifiedView())),),
+                child:  BoxButton(title: verifyText, onTap: model.navigateToVerifyView),
               ),
               const SizedBox(height: 16,),
               GestureDetector(

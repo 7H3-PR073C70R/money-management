@@ -54,14 +54,14 @@ class SettingsView extends StatelessWidget {
                         Navigator.of(context).push(CupertinoPageRoute(
                             builder: (_) => const ChangeCurrencyView()));
                       }),
-                  verticalSpaceSmall,
-                  SettingsMenuItem(
-                      imgPath: themeIcon,
-                      text: themeText,
-                      onTap: () {
-                        Navigator.of(context).push(CupertinoPageRoute(
-                            builder: (_) => const ThemeView()));
-                      }),
+                  // verticalSpaceSmall,
+                  // SettingsMenuItem(
+                  //     imgPath: themeIcon,
+                  //     text: themeText,
+                  //     onTap: () {
+                  //       Navigator.of(context).push(CupertinoPageRoute(
+                  //           builder: (_) => const ThemeView()));
+                  //     }),
                   verticalSpaceSmall,
                   SettingsMenuItem(
                       imgPath: helpIcon, text: helpText, onTap: () {}),

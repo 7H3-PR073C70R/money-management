@@ -29,7 +29,7 @@ class LoginOrSignUpView extends StatelessWidget {
                   BoxButton(
                     title: loginOrSignupLoginText,
                     isLogin: true,
-                    onTap: () => model.gotoLogin(context),
+                    onTap: model.gotoLogin,
                   ),
                   const SizedBox(
                     height: 32,
@@ -37,9 +37,7 @@ class LoginOrSignUpView extends StatelessWidget {
                   BoxButton(
                     title: loginOrSignupSignupText,
                     isSignUp: true,
-                    onTap: (){
-                      model.gotoSignUP(context);
-                    },
+                    onTap: model.gotoSignUP
                   ),
                   const SizedBox(
                     height: 32,

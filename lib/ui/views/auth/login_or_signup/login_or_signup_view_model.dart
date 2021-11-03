@@ -1,17 +1,16 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:money_management/ui/views/auth/login/login_view.dart';
-import '../sign_up/signup_view.dart';
+import 'package:money_management/app/app.router.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked/stacked.dart';
 
 class LoginOrSignUPViewModel extends BaseViewModel {
+  final _navigationService = NavigationService();
 
 
-  void gotoLogin(BuildContext context) {
-    Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context)=> const LoginView()));
+  void gotoLogin() {
+    _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
   }
 
-  void gotoSignUP(BuildContext context) {
-    Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context)=> const SignUpView()));
+  void gotoSignUP() {
+    _navigationService.pushNamedAndRemoveUntil(Routes.signUpView);
     }
 }

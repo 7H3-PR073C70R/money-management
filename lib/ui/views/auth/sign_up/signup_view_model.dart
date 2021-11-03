@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:money_management/ui/views/auth/login/login_view.dart';
-import '../email_verification/email_verification_view.dart';
+import 'package:money_management/app/app.router.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked/stacked.dart';
 
 class SignUpViewModel extends BaseViewModel {
+  final _navigationService = NavigationService();
   bool _isPasswordVisible = true;
 
   bool get passwordVisibility => _isPasswordVisible;
@@ -14,12 +13,11 @@ class SignUpViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void gotoConfirmPassword(BuildContext context) {
-    Navigator.of(context).pushReplacement(
-        CupertinoPageRoute(builder: (context) => const EmailVarificationView()));
+  void gotoConfirmPassword() {
+    _navigationService.pushNamedAndRemoveUntil(Routes.confirmEmailView);
   }
 
-  void gotoLogin(context) {
-    Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context)=> const LoginView()));
+  void gotoLogin() {
+    _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
   }
 }

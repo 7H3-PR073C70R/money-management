@@ -83,6 +83,8 @@ const String incomeAndExpensesTableName = 'Income_And_Expenses';
 const String budgetTableName = 'Budget';
 const String noNoteText = 'There\'s No Note to display';
 const String noNoteButtonText = 'Create A Note';
+const String noDataFound = 'NO DATA FOUND WITH THE SELECTED FILTER OPTION.';
+const String resetText = 'Reset';
 const List<String> incomeCategory = [
     'Salary',
     'Business',

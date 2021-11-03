@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:money_management/app/app.router.dart';
+import 'package:stacked_services/stacked_services.dart';
 import '../login_or_signup/login_or_signup_view.dart';
 import 'package:stacked/stacked.dart';
 
 class StartUpViewModel extends BaseViewModel {
+  final _navigationService = NavigationService();
   int _index = 0;
   final List _doc = [
     {
@@ -38,9 +41,8 @@ your finances''',
     notifyListeners();
   }
 
-  void gotoLoginOrSignUP(BuildContext context) {
-    Navigator.of(context).pushReplacement(
-        CupertinoPageRoute(builder: (context) => const LoginOrSignUpView()));
+  void gotoLoginOrSignUP() {
+   _navigationService.pushNamedAndRemoveUntil(Routes.loginOrSignUpView);
   }
 
   int get index => _index;

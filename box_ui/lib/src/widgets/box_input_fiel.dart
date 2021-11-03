@@ -10,7 +10,7 @@ class BoxInputField extends StatelessWidget {
   final bool passwordVisibility;
   final String? label;
   final FocusNode? focusNode;
-  final int? maxLines;
+  final int maxLines;
   final TextInputType? keyboardType;
   final void Function()? onVisibilityPressed;
   final void Function(String value)? onChanged;
@@ -23,7 +23,7 @@ class BoxInputField extends StatelessWidget {
       this.keyboardType,
       this.label,
       this.focusNode,
-      this.maxLines,
+      this.maxLines = 1,
       this.isPassword = false,
       this.enabled = true,
       this.onVisibilityPressed})

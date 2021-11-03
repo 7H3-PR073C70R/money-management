@@ -2,23 +2,37 @@ import 'package:box_ui/box_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:money_management/app/app.router.dart';
 import 'package:money_management/model/note_model.dart';
 import 'package:money_management/ui/shared/const_ui_helper.dart';
 import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
-import 'package:money_management/ui/views/main/main_views/home/home_view_model.dart';
+import 'package:money_management/ui/views/main/notes/note_view_model.dart';
+import 'package:stacked/stacked.dart';
 
 class AddNoteView extends StatelessWidget {
-  final HomeViewModel model;
-  AddNoteView({Key? key, required this.model}) : super(key: key);
+  final NoteViewModel? model;
+  AddNoteView({Key? key, this.model}) : super(key: key);
   final _titleController = TextEditingController();
   final _textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return StatusBar(
+    final _args = ModalRoute.of(context)!.settings.arguments as AddNoteViewArguments;
+    final argModel =  _args.model; 
+    final focusScope = FocusScope.of(context);
+    return ViewModelBuilder.nonReactive(
+      viewModelBuilder: ()=> argModel,
+      onDispose: (model){
+        _textController.dispose();
+        _titleController.dispose();
+      },
+      builder: (context, _, child) => StatusBar(
         child: Scaffold(
             appBar: AppBar(
               leading: IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: (){
+                    focusScope.unfocus();
+                    argModel.navigateBack();
+                  },
                   icon: const Icon(
                     Icons.arrow_back,
                     color: Colors.black,
@@ -32,12 +46,11 @@ class AddNoteView extends StatelessWidget {
               actions: [
                 TextButton(
                     onPressed: () {
-                      model.createNote(Note(
+                      focusScope.unfocus();
+                      argModel.createNote(Note(
                         text: _textController.text,
                         title: _titleController.text,
-                        
                       ));
-                      Navigator.of(context).pop();
                     },
                     child: Text(
                       'Save',
@@ -75,6 +88,6 @@ class AddNoteView extends StatelessWidget {
                   ],
                 )),
               ),
-            )));
+            ))));
   }
 }

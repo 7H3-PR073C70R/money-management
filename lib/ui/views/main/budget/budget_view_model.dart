@@ -1,24 +1,31 @@
 import 'package:intl/intl.dart';
+import 'package:money_management/app/app.locator.dart';
+import 'package:money_management/app/app.router.dart';
 import 'package:money_management/constants/app_string.dart';
 import 'package:money_management/model/budget_model.dart';
 import 'package:money_management/service/db_service.dart';
+import 'package:money_management/service/user_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class BudgetViewModel extends BaseViewModel {
+  final _dbService = locator<DataBaseService>();
+  final _userService = locator<UserService>();
+  final _navigationService = NavigationService();
+
+  String get currencySymbol => _userService.currency;
+
   /// the current index of the first five list shown in the view.
   int _currentIndex = 1;
 
   /// to know the state to  put the view in. It's true initial since the view is busy
   /// immediately it come into display
-  
+
   bool _isBusy = true;
 
   @override
   bool get isBusy => _isBusy;
-  /// To know if the createbudget view is to shown or not.
-  bool _showCreateBudget = false;
 
-  get showCreateBudget => _showCreateBudget;
   get currentIndex => _currentIndex;
 
   /// A list of categories for users to choose from.
@@ -38,7 +45,8 @@ class BudgetViewModel extends BaseViewModel {
   get categoryValue => _categoryValue;
 
   DateTime? _date;
-  String get date => _date != null ? DateFormat('dd MMM, yyyy').format(_date!) : '';
+  String get date =>
+      _date != null ? DateFormat('dd MMM, yyyy').format(_date!) : '';
 
   String _amount = '';
   String _description = '';
@@ -52,8 +60,8 @@ class BudgetViewModel extends BaseViewModel {
   /// list to be displayed in the view.
   Future<void> init() async {
     final Budget budget = Budget();
-    final List<dynamic> result = await DataBaseService.instance
-        .readAll(obj: budget, table: budgetTableName);
+    final List<dynamic> result =
+        await _dbService.readAll(obj: budget, table: budgetTableName);
     _budgets = result.cast<Budget>();
     _budgetsToDisplay = getbudgetsToDisplay();
     await Future.delayed(const Duration(milliseconds: 50));
@@ -107,13 +115,6 @@ class BudgetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  /// The method update the value of [_showCreateBudget]. Which is used to determine
-  /// if the create budget view is to be shown instead of the budger view.
-  void setShowCreateBudget() {
-    _showCreateBudget = !_showCreateBudget;
-    notifyListeners();
-  }
-
   void setAmount(String value) {
     _amount = value;
     notifyListeners();
@@ -132,22 +133,36 @@ class BudgetViewModel extends BaseViewModel {
         category: _categoryValue,
         description: _description,
         date: _date,
-        amount: double.parse(_amount));
+        amount: double.tryParse(_amount));
     final result = await runBusyFuture(
-        DataBaseService.instance.create(obj: budget, table: budgetTableName));
+        _dbService.create(obj: budget, table: budgetTableName));
     budget = result as Budget;
     _budgets.insert(0, budget);
 
     // update the budgets to display list
     _budgetsToDisplay = getbudgetsToDisplay();
 
-    // show the budget view instead of the create.
-    setShowCreateBudget();
+    /// Navigate back to the budget view.
+    navigateBack();
+  
     // set [_date] to an empty string in case of immediate nex entry
     _date = null;
 
     // set [_categoryValue] to it initial value in case of immediate nex entry
     _categoryValue = _category[0];
+    notifyListeners();
+  }
+
+  void navigateToCreateBudget(BudgetViewModel model) {
+    _navigationService.navigateTo(Routes.createBudgetView,
+        arguments: CreateBudgetViewArguments(model: model));
+  }
+
+  void navigateBack() {
+    _navigationService.popRepeated(1);
+  }
+
+  void setState() {
     notifyListeners();
   }
 }

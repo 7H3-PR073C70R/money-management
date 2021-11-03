@@ -1,5 +1,7 @@
 import 'package:stacked/stacked.dart';
 
+MainViewModel mainViewModel = MainViewModel();
+
 class MainViewModel extends BaseViewModel {
   int _currentPageIndex = 0;
   int get currentPageIndex => _currentPageIndex;

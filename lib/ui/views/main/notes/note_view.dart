@@ -7,20 +7,22 @@ import 'package:money_management/ui/shared/const_color_helper.dart';
 import 'package:money_management/ui/shared/const_ui_helper.dart';
 import 'package:money_management/ui/shared/dumb_widgets/no_item.dart';
 import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
-import 'package:money_management/ui/views/main/main_views/home/home_view_model.dart';
+import 'package:money_management/ui/views/main/notes/note_view_model.dart';
+import 'package:stacked/stacked.dart';
 import 'add_note_view.dart';
 
 class NoteView extends StatelessWidget {
-  final HomeViewModel model;
-  const NoteView({Key? key, required this.model}) : super(key: key);
+  const NoteView({Key? key, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StatusBar(
+    return ViewModelBuilder<NoteViewModel>.reactive(
+      viewModelBuilder: ()=>NoteViewModel(), 
+      onModelReady: (model) => model.init(),
+    builder:(context, model, child) => StatusBar(
       child: Scaffold(
           floatingActionButton: FloatingActionButton(
-            onPressed: () => Navigator.of(context).push(CupertinoPageRoute(
-                builder: (context) => AddNoteView(model: model))),
+            onPressed: () => model.navigateToAddNoteView(model),
             backgroundColor: kcPrimaryColor,
             child: const Icon(
               Icons.add,
@@ -29,7 +31,7 @@ class NoteView extends StatelessWidget {
           ),
           appBar: AppBar(
               leading: IconButton(
-                  onPressed: model.setShowNoteView,
+                  onPressed: model.navigateBack,
                   icon: const Icon(
                     Icons.arrow_back,
                     color: Colors.black,
@@ -59,8 +61,7 @@ class NoteView extends StatelessWidget {
               ? NoItem(
                   text: noNoteText,
                   buttonText: noNoteButtonText,
-                  onTap: () => Navigator.of(context).push(CupertinoPageRoute(
-                      builder: (context) => AddNoteView(model: model))),
+                  onTap: () => model.navigateToAddNoteView(model),
                 )
               : Padding(
                   padding: const EdgeInsets.symmetric(
@@ -109,6 +110,6 @@ class NoteView extends StatelessWidget {
                       separatorBuilder: (context, _) => verticalSpaceVeryTiny,
                       itemCount: model.notes.length),
                 )),
-    );
+    ) );
   }
 }

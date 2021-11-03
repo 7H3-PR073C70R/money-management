@@ -54,14 +54,11 @@ class LoginView extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: GestureDetector(
-                            onTap: () => Navigator.of(context).push(
-                                CupertinoPageRoute(
-                                    builder: (context) =>
-                                        const ForgetPasswordView())),
+                            onTap: model.navigateToForgetPassword,
                             child: Text(
                               forgetPasswordText,
                               textAlign: TextAlign.right,
-                              style: heading6Style.copyWith(
+                              style: bodyStyle.copyWith(
                                 color: kcBlue1,
                               ),
                             ),
@@ -70,32 +67,26 @@ class LoginView extends StatelessWidget {
                         verticalSpaceSmall,
                         BoxButton(
                             title: loginOrSignupLoginText,
-                            onTap: () => Navigator.of(context).pushReplacement(
-                                CupertinoPageRoute(
-                                    builder: (context) =>  const MainView()))),
+                            onTap: model.navigateToMainView),
                         verticalSpaceSmall,
                         Align(
-                          alignment: Alignment.bottomRight,
+                          alignment: Alignment.bottomCenter,
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 8.0),
                             child: RichText(
-                                textAlign: TextAlign.right,
+                                textAlign: TextAlign.center,
                                 text: TextSpan(
                                     text: dontHaveAnAcctText,
-                                    style: heading6Style.copyWith(
+                                    style: bodyStyle.copyWith(
                                         color: Colors.black),
                                     children: [
                                       TextSpan(
                                           text: loginOrSignupSignupText,
-                                          style: heading6Style.copyWith(
+                                          style: bodyStyle.copyWith(
                                             color: kcBlue1,
                                           ),
                                           recognizer: TapGestureRecognizer()
-                                            ..onTap = () => Navigator.of(context)
-                                                .pushReplacement(
-                                                    CupertinoPageRoute(
-                                                        builder: (context) =>
-                                                            const SignUpView())))
+                                            ..onTap = model.navigateToSignUpView)
                                     ])),
                           ),
                         )

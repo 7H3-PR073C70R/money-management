@@ -14,6 +14,8 @@ class ChangeCurrencyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ChangeCurrencyViewModel>.reactive(
       viewModelBuilder: () => ChangeCurrencyViewModel(),
+      onDispose: (model) => model.saveCurrency(),
+      onModelReady: (model) => model.setCurrency(),
       builder: (
         BuildContext context,
         ChangeCurrencyViewModel model,

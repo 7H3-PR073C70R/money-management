@@ -19,7 +19,7 @@ class MainView extends StatelessWidget {
         MainViewModel model,
         Widget? child,
       ) {
-        return Scaffold(
+        return Scaffold( 
           bottomNavigationBar: NavBar(model: model,),
           body: _pages[model.currentPageIndex]
         );

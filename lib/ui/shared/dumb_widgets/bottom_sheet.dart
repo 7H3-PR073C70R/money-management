@@ -12,10 +12,12 @@ class BuildBottomSheet extends StatelessWidget {
   final int selectedFilterIndex;
   final Function(int index) setSelectedFilterIndex;
   final VoidCallback setShowBottomSheet;
+  final VoidCallback onReset;
   BuildBottomSheet(
       {Key? key,
       required this.selectedFilterIndex,
       required this.setSelectedFilterIndex,
+      required this.onReset,
       required this.setShowBottomSheet})
       : super(key: key);
 
@@ -82,7 +84,13 @@ class BuildBottomSheet extends StatelessWidget {
                         ),
                         onPressed: setShowBottomSheet),
                   )),
-              BoxText.headingSix(filterByDateText),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  BoxText.headingSix(filterByDateText),
+                  TextButton(onPressed: onReset, child: Text(resetText, style: heading6Style.copyWith(color: kcPrimaryColor, fontSize: 15),),)
+                ],
+              ),
               verticalSpaceVeryTiny,
               Expanded(
                 child: Column(

@@ -8,9 +8,8 @@ import 'package:money_management/ui/shared/const_ui_helper.dart';
 import 'package:money_management/ui/shared/dumb_widgets/no_item.dart';
 import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
 import 'package:stacked/stacked.dart';
-
 import 'budget_view_model.dart';
-import 'create_budget_view.dart';
+
 
 class BudgetView extends StatelessWidget {
   const BudgetView({
@@ -28,13 +27,9 @@ class BudgetView extends StatelessWidget {
         Widget? child,
       ) {
         return StatusBar(
-          child: model.showCreateBudget
-              ? CreateBudgetView(
-                  model: model,
-                )
-              : Scaffold(
+          child: Scaffold(
                   floatingActionButton: FloatingActionButton(
-                    onPressed: model.setShowCreateBudget,
+                    onPressed: () => model.navigateToCreateBudget(model),
                     backgroundColor: kcPrimaryColor,
                     child: const Icon(
                       Icons.add,
@@ -78,7 +73,7 @@ class BudgetView extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                              'N${NumberFormat('#,###').format(model.budgetsToDisplay[index].amount)}',
+                                              '${model.currencySymbol}${NumberFormat('#,###').format(model.budgetsToDisplay[index].amount)}',
                                               style: heading6Style.copyWith(
                                                 color: kcPrimaryColor,
                                                 fontSize: 14,
@@ -95,7 +90,7 @@ class BudgetView extends StatelessWidget {
                                       ),
                                       const Spacer(),
                                       Text(
-                                          '${model.budgetsToDisplay[index].date}',
+                                          DateFormat('d MMM, yyyy').format(model.budgetsToDisplay[index].date!),
                                           style: heading6Style.copyWith(
                                             fontWeight: FontWeight.w400,
                                             color: kcNeutral4,
@@ -109,6 +104,7 @@ class BudgetView extends StatelessWidget {
                             itemCount: model.budgetsToDisplay.length),
                       ),
                       verticalSpaceVeryTiny,
+                      if(model.remainder != 1)
                       Padding(
                         padding: const EdgeInsets.only(right: 6.0),
                         child: Row(
