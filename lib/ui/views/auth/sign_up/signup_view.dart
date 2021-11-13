@@ -1,11 +1,11 @@
 import 'package:box_ui/box_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:money_management/constants/app_image_path.dart';
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/ui/shared/const_color_helper.dart';
-import 'package:money_management/ui/shared/dumb_widgets/rich_text.dart';
-import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
+import '../../../../constants/app_image_path.dart';
+import '../../../../constants/app_string.dart';
+import '../../../shared/const_color_helper.dart';
+import '../../../shared/dumb_widgets/rich_text.dart';
+import '../../../shared/dumb_widgets/statusbar.dart';
 import 'signup_view_model.dart';
 import 'package:stacked/stacked.dart';
 

@@ -79,12 +79,16 @@ const String darkText = 'Dark';
 const String lightText = 'Light';
 const String dbName = 'money_management.db';
 const String noteTableName = 'Notes';
+const String budgetExpenseTableName = 'Budget_Expenses';
+const String noExpensesAssociatedText = 'No expeneses asscoiated with this budget yet. Click the plus button to start adding expenses';
 const String incomeAndExpensesTableName = 'Income_And_Expenses';
 const String budgetTableName = 'Budget';
 const String noNoteText = 'There\'s No Note to display';
 const String noNoteButtonText = 'Create A Note';
 const String noDataFound = 'NO DATA FOUND WITH THE SELECTED FILTER OPTION.';
 const String resetText = 'Reset';
+const String budgetTotalText = 'BUDGET TOTAL';
+const String budgetBalanceText = 'BUDGET BALANCE';
 const List<String> incomeCategory = [
     'Salary',
     'Business',

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_management/ui/shared/dumb_widgets/nav_bar.dart';
+import '../../shared/dumb_widgets/nav_bar.dart';
 import 'package:stacked/stacked.dart';
 import 'budget/budget_view.dart';
 import 'main_view_model.dart';

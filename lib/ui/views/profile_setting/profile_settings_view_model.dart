@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:money_management/service/image_picket_services.dart';
+import '../../../service/image_picket_services.dart';
 import 'package:stacked/stacked.dart';
 
 class ProfileSettingsViewModel extends BaseViewModel {

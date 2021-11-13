@@ -1,7 +1,7 @@
-import 'package:money_management/app/app.locator.dart';
-import 'package:money_management/constants/enums.dart';
-import 'package:money_management/model/user_model.dart';
-import 'package:money_management/service/shared_prefs.dart';
+import '../app/app.locator.dart';
+import '../constants/enums.dart';
+import '../model/user_model.dart';
+import 'shared_prefs.dart';
 
 class UserService {
   final _sharedPrefsService = locator<SharedPresService>();

@@ -1,9 +1,9 @@
 import 'package:box_ui/box_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:money_management/constants/app_image_path.dart';
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/ui/views/main/main_view_model.dart';
+import '../../../constants/app_image_path.dart';
+import '../../../constants/app_string.dart';
+import '../../views/main/main_view_model.dart';
 
 class NavBar extends StatelessWidget {
   final MainViewModel model;

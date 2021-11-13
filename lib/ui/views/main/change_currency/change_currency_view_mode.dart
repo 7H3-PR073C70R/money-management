@@ -1,8 +1,8 @@
-import 'package:money_management/app/app.locator.dart';
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/constants/enums.dart';
-import 'package:money_management/service/shared_prefs.dart';
-import 'package:money_management/service/user_service.dart';
+import '../../../../app/app.locator.dart';
+import '../../../../constants/app_string.dart';
+import '../../../../constants/enums.dart';
+import '../../../../service/shared_prefs.dart';
+import '../../../../service/user_service.dart';
 import 'package:stacked/stacked.dart';
 
 class ChangeCurrencyViewModel extends BaseViewModel {

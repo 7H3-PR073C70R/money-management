@@ -1,8 +1,8 @@
 import 'package:intl/intl.dart';
-import 'package:money_management/app/app.locator.dart';
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/model/incomde_and_expenses_model.dart';
-import 'package:money_management/service/db_service.dart';
+import '../../../../app/app.locator.dart';
+import '../../../../constants/app_string.dart';
+import '../../../../model/incomde_and_expenses_model.dart';
+import '../../../../service/db_service.dart';
 import 'package:stacked/stacked.dart';
 
 class AddIncomeOrExpensesViewModel extends BaseViewModel {
@@ -50,7 +50,7 @@ class AddIncomeOrExpensesViewModel extends BaseViewModel {
     await _dbService.create(
         obj: IncomeAndExpenses(
             date: DateTime(_date!.year, _date!.month, _date!.day),
-            amount: double.parse(_amount),
+            amount: double.tryParse(_amount.replaceAll(',', '')),
             description: _description,
             category: _category,
             isExpenses: isExpenses),

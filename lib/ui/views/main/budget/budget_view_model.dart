@@ -1,10 +1,11 @@
 import 'package:intl/intl.dart';
-import 'package:money_management/app/app.locator.dart';
-import 'package:money_management/app/app.router.dart';
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/model/budget_model.dart';
-import 'package:money_management/service/db_service.dart';
-import 'package:money_management/service/user_service.dart';
+import 'package:money_management/model/budget_expense_model.dart';
+import '../../../../app/app.locator.dart';
+import '../../../../app/app.router.dart';
+import '../../../../constants/app_string.dart';
+import '../../../../model/budget_model.dart';
+import '../../../../service/db_service.dart';
+import '../../../../service/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -63,13 +64,13 @@ class BudgetViewModel extends BaseViewModel {
     final List<dynamic> result =
         await _dbService.readAll(obj: budget, table: budgetTableName);
     _budgets = result.cast<Budget>();
-    _budgetsToDisplay = getbudgetsToDisplay();
+    _budgetsToDisplay = getBudgetsToDisplay();
     await Future.delayed(const Duration(milliseconds: 50));
     _isBusy = false;
     notifyListeners();
   }
 
-  List<Budget> getbudgetsToDisplay() {
+  List<Budget> getBudgetsToDisplay() {
     return _budgets.length < 5 ? _budgets : _budgets.sublist(0, 5);
   }
 
@@ -133,18 +134,18 @@ class BudgetViewModel extends BaseViewModel {
         category: _categoryValue,
         description: _description,
         date: _date,
-        amount: double.tryParse(_amount));
+        amount: double.tryParse(_amount.replaceAll(',', '')));
     final result = await runBusyFuture(
         _dbService.create(obj: budget, table: budgetTableName));
     budget = result as Budget;
     _budgets.insert(0, budget);
 
     // update the budgets to display list
-    _budgetsToDisplay = getbudgetsToDisplay();
+    _budgetsToDisplay = getBudgetsToDisplay();
 
     /// Navigate back to the budget view.
     navigateBack();
-  
+
     // set [_date] to an empty string in case of immediate nex entry
     _date = null;
 
@@ -164,5 +165,35 @@ class BudgetViewModel extends BaseViewModel {
 
   void setState() {
     notifyListeners();
+  }
+
+  void gotoBudgetInfoView(Budget budgetsToDisplay) {
+    final index = _budgets.indexOf(budgetsToDisplay);
+    _navigationService.navigateTo(Routes.budgetInfoView,
+        arguments: BudgetInfoViewArguments(budget: _budgets[index]));
+  }
+
+  void deleteBudget(Budget budgetToDelete) async {
+    final index = _budgets.indexOf(budgetToDelete);
+    _budgets.removeAt(index);
+    _budgetsToDisplay = getBudgetsToDisplay();
+    notifyListeners();
+
+    final result = await _dbService.readAll(
+        obj: BudgetExpenses(), table: budgetExpenseTableName);
+
+    // Get all the expenses associated with the budget and save it into [budgetExpenses]
+    final List<BudgetExpenses> budgetExpenses = result
+        .cast<BudgetExpenses>()
+        .where((expenses) => expenses.foreignKey == budgetToDelete.id!)
+        .toList();
+
+    // Delete all the expenses associated with the budget from db
+    for (var expense in budgetExpenses) {
+      _dbService.delete(table: budgetExpenseTableName, id: expense.id!);
+    }
+
+    // Delete the budget
+    _dbService.delete(table: budgetTableName, id: budgetToDelete.id!);
   }
 }

@@ -1,4 +1,4 @@
-import 'package:money_management/constants/enums.dart';
+import '../constants/enums.dart';
 
 class User {
   String? id;

@@ -1,7 +1,8 @@
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/model/budget_model.dart';
-import 'package:money_management/model/incomde_and_expenses_model.dart';
-import 'package:money_management/model/note_model.dart';
+import '../constants/app_string.dart';
+import '../model/budget_expense_model.dart';
+import '../model/budget_model.dart';
+import '../model/incomde_and_expenses_model.dart';
+import '../model/note_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DataBaseService {
@@ -52,6 +53,10 @@ class DataBaseService {
     /// Create Table Note
     await db.execute(
         'CREATE TABLE $noteTableName (${NoteField.id} $idType, ${NoteField.title} $textType, ${NoteField.text} $textType, ${NoteField.date} $textType)');
+
+    /// Create Budget Expenses
+    await db.execute(
+        'CREATE TABLE $budgetExpenseTableName (${BudgetExpensesField.id} $idType,  ${BudgetExpensesField.amount} $numType, ${BudgetExpensesField.category} $textType, ${BudgetExpensesField.description} $textType, ${BudgetExpensesField.date} $textType, ${BudgetExpensesField.foreignKey} INTEGER )');
   }
 
   /// This method is responsible for inserting data into the db, the method required the obj

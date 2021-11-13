@@ -1,4 +1,4 @@
-import 'package:money_management/app/app.router.dart';
+import '../../../../app/app.router.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked/stacked.dart';
 

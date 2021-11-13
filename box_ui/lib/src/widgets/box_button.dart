@@ -8,12 +8,14 @@ class BoxButton extends StatelessWidget {
   final bool isLogin;
   final bool isSignUp;
   final void Function()? onTap;
+  final Color? color;
   const BoxButton(
       {required this.title,
       this.isBusy = false,
       this.onTap,
       this.isLogin = false,
       this.isSignUp = false,
+      this.color,
       Key? key})
       : super(key: key);
 
@@ -27,7 +29,7 @@ class BoxButton extends StatelessWidget {
         height: 48,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: isLogin
+            color: color != null ? color : isLogin
                 ? Colors.white
                 : isSignUp
                     ? Colors.transparent

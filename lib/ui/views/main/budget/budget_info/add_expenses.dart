@@ -1,29 +1,30 @@
 import 'package:box_ui/box_ui.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../../../../constants/app_string.dart';
-import '../../../shared/const_color_helper.dart';
-import '../../../shared/const_ui_helper.dart';
-import '../../../shared/dumb_widgets/build_label_container.dart';
-import '../../../shared/dumb_widgets/statusbar.dart';
-import '../main_view.dart';
+import '../../../../../constants/app_string.dart';
+import '../../../../../model/budget_expense_model.dart';
+import '../../../../../model/budget_model.dart';
+import '../../../../shared/const_color_helper.dart';
+import '../../../../shared/const_ui_helper.dart';
+import '../../../../shared/dumb_widgets/build_label_container.dart';
+import '../../../../shared/dumb_widgets/statusbar.dart';
+import 'budget_info_view_model.dart';
 import 'package:stacked/stacked.dart';
-import 'add_income_or_expenses_view_model.dart';
 
-class AddIncomeOrExpensesView extends StatelessWidget {
-  final bool isExpenses;
-  const AddIncomeOrExpensesView({Key? key, required this.isExpenses})
+class AddBudgetExpensesView extends StatelessWidget {
+  final BudgetInfoViewModel bimodel;
+  final Budget budget;
+  const AddBudgetExpensesView(
+      {Key? key, required this.bimodel, required this.budget})
       : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
     final focusScope = FocusScope.of(context);
-    return ViewModelBuilder<AddIncomeOrExpensesViewModel>.reactive(
-      viewModelBuilder: () => AddIncomeOrExpensesViewModel(),
+    return ViewModelBuilder<BudgetInfoViewModel>.reactive(
+      viewModelBuilder: () => BudgetInfoViewModel(),
       builder: (
         BuildContext context,
-        AddIncomeOrExpensesViewModel model,
+        BudgetInfoViewModel model,
         Widget? child,
       ) {
         return StatusBar(
@@ -34,7 +35,6 @@ class AddIncomeOrExpensesView extends StatelessWidget {
               ? Container(
                   color: kcNeutral6,
                   child: BuildBottomModelSheet(
-                    isIncome: !isExpenses,
                     model: model,
                   ))
               : null,
@@ -49,7 +49,7 @@ class AddIncomeOrExpensesView extends StatelessWidget {
                   color: Colors.black,
                 )),
             title: Text(
-              !isExpenses ? addIncomeText : addExpenseText,
+              addExpenseText,
               style: heading6Style.copyWith(
                 color: Colors.black,
               ),
@@ -95,8 +95,7 @@ class AddIncomeOrExpensesView extends StatelessWidget {
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime.utc(2020),
                                       lastDate: DateTime.utc(2100))
-                                  .then((value) => model.setDate(
-                                      value!))
+                                  .then((value) => model.setDate(value!))
                                   .onError((error, stackTrace) => null);
                             },
                             child: BuildLabelContainer(
@@ -118,10 +117,14 @@ class AddIncomeOrExpensesView extends StatelessWidget {
                         BoxButton(
                             title: 'Save',
                             onTap: () {
-                              model.createIncomeOrExpenses(isExpenses);
-                              Navigator.of(context).pushReplacement(
-                                  CupertinoPageRoute(
-                                      builder: (_) => const MainView()));
+                              bimodel.insetBudgetExpenses(
+                                expenses :BudgetExpenses(
+                                    amount: double.tryParse(model.amount.replaceAll(',', '')),
+                                    category: model.category,
+                                    date: model.selectedDate,
+                                    description: model.description,
+                                    foreignKey: budget.id
+                                    ));
                             })
                       ],
                     )),
@@ -137,15 +140,13 @@ class AddIncomeOrExpensesView extends StatelessWidget {
 }
 
 class BuildBottomModelSheet extends StatelessWidget {
-  final bool isIncome;
-  final AddIncomeOrExpensesViewModel model;
-  const BuildBottomModelSheet(
-      {Key? key, required this.isIncome, required this.model})
+  final BudgetInfoViewModel model;
+  const BuildBottomModelSheet({Key? key, required this.model})
       : super(key: key);
   final radius = const Radius.circular(30);
   @override
   Widget build(BuildContext context) {
-    final dataList = isIncome ? incomeCategory : expensesCategory;
+    final dataList = expensesCategory;
     return Container(
       height: screenHeiht(context) * 0.5,
       decoration: BoxDecoration(
@@ -157,8 +158,8 @@ class BuildBottomModelSheet extends StatelessWidget {
             height: 50,
             padding: const EdgeInsets.symmetric(horizontal: 31, vertical: 8),
             child: Row(children: [
-              Text(
-                '${isIncome ? 'Income' : 'Expenses'} Category',
+              const Text(
+                'Expenses Category',
                 style: heading6Style,
               ),
               const Spacer(),

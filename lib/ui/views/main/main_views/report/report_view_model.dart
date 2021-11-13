@@ -1,8 +1,8 @@
-import 'package:money_management/app/app.locator.dart';
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/model/incomde_and_expenses_model.dart';
-import 'package:money_management/service/db_service.dart';
-import 'package:money_management/service/user_service.dart';
+import '../../../../../app/app.locator.dart';
+import '../../../../../constants/app_string.dart';
+import '../../../../../model/incomde_and_expenses_model.dart';
+import '../../../../../service/db_service.dart';
+import '../../../../../service/user_service.dart';
 import 'package:stacked/stacked.dart';
 
 class ReportViewModel extends BaseViewModel {
