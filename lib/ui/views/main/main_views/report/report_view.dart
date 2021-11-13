@@ -4,13 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:money_management/constants/app_image_path.dart';
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/ui/shared/const_color_helper.dart';
-import 'package:money_management/ui/shared/const_ui_helper.dart';
-import 'package:money_management/ui/shared/dumb_widgets/bottom_sheet.dart';
-import 'package:money_management/ui/shared/dumb_widgets/chart_indicator.dart';
-import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
+import '../../../../../constants/app_image_path.dart';
+import '../../../../../constants/app_string.dart';
+import '../../../../shared/const_color_helper.dart';
+import '../../../../shared/const_ui_helper.dart';
+import '../../../../shared/dumb_widgets/bottom_sheet.dart';
+import '../../../../shared/dumb_widgets/chart_indicator.dart';
+import '../../../../shared/dumb_widgets/statusbar.dart';
 import 'package:stacked/stacked.dart';
 import 'report_view_model.dart';
 
@@ -36,6 +36,7 @@ class ReportView extends StatelessWidget {
                 ? Container(
                     color: kcNeutral6,
                     child: BuildBottomSheet(
+                      onReset: () => model.setSelectedFilterIndex(-1),
                         selectedFilterIndex: model.selectedFilterIndex,
                         setSelectedFilterIndex: model.setSelectedFilterIndex,
                         setShowBottomSheet: model.setShowBottomSheet))
@@ -155,7 +156,7 @@ class BuildExpensesContainer extends StatelessWidget {
                     child: SizedBox(
                   width: screenWidth(context) * 0.2,
                   child: Text(
-                      'N${NumberFormat('#,###').format(model.expensesTotal)}',
+                      '${model.currencySymbol}${NumberFormat('#,###').format(model.expensesTotal)}',
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       softWrap: true,
@@ -321,7 +322,7 @@ class BuildIncomeContainer extends StatelessWidget {
                     child: SizedBox(
                   width: screenWidth(context) * 0.2,
                   child: Text(
-                      'N${NumberFormat('#,###').format(model.incomeTotal)}',
+                      '${model.currencySymbol}${NumberFormat('#,###').format(model.incomeTotal)}',
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       softWrap: true,

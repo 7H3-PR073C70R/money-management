@@ -1,9 +1,9 @@
 import 'package:box_ui/box_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/ui/shared/const_color_helper.dart';
-import 'package:money_management/ui/shared/const_ui_helper.dart';
-import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
+import '../../../../constants/app_string.dart';
+import '../../../shared/const_color_helper.dart';
+import '../../../shared/const_ui_helper.dart';
+import '../../../shared/dumb_widgets/statusbar.dart';
 import 'package:stacked/stacked.dart';
 
 import 'forget_password_view_model.dart';

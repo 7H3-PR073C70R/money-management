@@ -1,9 +1,9 @@
 import 'package:box_ui/box_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:money_management/constants/app_image_path.dart';
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
+import '../../../../constants/app_image_path.dart';
+import '../../../../constants/app_string.dart';
+import '../../../shared/dumb_widgets/statusbar.dart';
 import 'start_up_view_model.dart';
 import 'package:stacked/stacked.dart';
 
@@ -90,7 +90,7 @@ class StartUpView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
-                                  onTap: () => model.gotoLoginOrSignUP(context),
+                                  onTap: model.gotoLoginOrSignUP,
                                   child: BoxText.body(
                                     skipText,
                                     color: Colors.white,
@@ -106,7 +106,7 @@ class StartUpView extends StatelessWidget {
                               ],
                             )
                           : GestureDetector(
-                              onTap: () => model.gotoLoginOrSignUP(context),
+                              onTap:  model.gotoLoginOrSignUP,
                               child: Container(
                                 height: 52,
                                 width: 52,

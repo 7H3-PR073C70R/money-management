@@ -2,15 +2,15 @@ import 'package:box_ui/box_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:money_management/constants/app_image_path.dart';
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/ui/shared/const_color_helper.dart';
-import 'package:money_management/ui/shared/const_ui_helper.dart';
-import 'package:money_management/ui/shared/dumb_widgets/rich_text.dart';
-import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
-import 'package:money_management/ui/views/auth/forget_password/forget_password_view.dart';
-import 'package:money_management/ui/views/auth/sign_up/signup_view.dart';
-import 'package:money_management/ui/views/main/main_view.dart';
+import '../../../../constants/app_image_path.dart';
+import '../../../../constants/app_string.dart';
+import '../../../shared/const_color_helper.dart';
+import '../../../shared/const_ui_helper.dart';
+import '../../../shared/dumb_widgets/rich_text.dart';
+import '../../../shared/dumb_widgets/statusbar.dart';
+import '../forget_password/forget_password_view.dart';
+import '../sign_up/signup_view.dart';
+import '../../main/main_view.dart';
 import 'login_view_model.dart';
 import 'package:stacked/stacked.dart';
 
@@ -54,14 +54,11 @@ class LoginView extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: GestureDetector(
-                            onTap: () => Navigator.of(context).push(
-                                CupertinoPageRoute(
-                                    builder: (context) =>
-                                        const ForgetPasswordView())),
+                            onTap: model.navigateToForgetPassword,
                             child: Text(
                               forgetPasswordText,
                               textAlign: TextAlign.right,
-                              style: heading6Style.copyWith(
+                              style: bodyStyle.copyWith(
                                 color: kcBlue1,
                               ),
                             ),
@@ -70,32 +67,26 @@ class LoginView extends StatelessWidget {
                         verticalSpaceSmall,
                         BoxButton(
                             title: loginOrSignupLoginText,
-                            onTap: () => Navigator.of(context).pushReplacement(
-                                CupertinoPageRoute(
-                                    builder: (context) =>  const MainView()))),
+                            onTap: model.navigateToMainView),
                         verticalSpaceSmall,
                         Align(
-                          alignment: Alignment.bottomRight,
+                          alignment: Alignment.bottomCenter,
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 8.0),
                             child: RichText(
-                                textAlign: TextAlign.right,
+                                textAlign: TextAlign.center,
                                 text: TextSpan(
                                     text: dontHaveAnAcctText,
-                                    style: heading6Style.copyWith(
+                                    style: bodyStyle.copyWith(
                                         color: Colors.black),
                                     children: [
                                       TextSpan(
                                           text: loginOrSignupSignupText,
-                                          style: heading6Style.copyWith(
+                                          style: bodyStyle.copyWith(
                                             color: kcBlue1,
                                           ),
                                           recognizer: TapGestureRecognizer()
-                                            ..onTap = () => Navigator.of(context)
-                                                .pushReplacement(
-                                                    CupertinoPageRoute(
-                                                        builder: (context) =>
-                                                            const SignUpView())))
+                                            ..onTap = model.navigateToSignUpView)
                                     ])),
                           ),
                         )

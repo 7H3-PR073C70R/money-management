@@ -1,7 +1,7 @@
 import 'package:box_ui/box_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:money_management/constants/app_image_path.dart';
+import '../../../constants/app_image_path.dart';
 import '../const_ui_helper.dart';
 
 class NoItem extends StatelessWidget {

@@ -1,9 +1,14 @@
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/model/incomde_and_expenses_model.dart';
-import 'package:money_management/service/db_service.dart';
+import '../../../../../app/app.locator.dart';
+import '../../../../../constants/app_string.dart';
+import '../../../../../model/incomde_and_expenses_model.dart';
+import '../../../../../service/db_service.dart';
+import '../../../../../service/user_service.dart';
 import 'package:stacked/stacked.dart';
 
 class ReportViewModel extends BaseViewModel {
+  final _dbService = locator<DataBaseService>();
+  final _userService = locator<UserService>();
+
   int _currentPageIndex = 0;
   int _selectedFilterIndex = -1;
   bool _showBottomSheet = false;
@@ -16,6 +21,7 @@ class ReportViewModel extends BaseViewModel {
   int get currentPageIndex => _currentPageIndex;
   bool get showBottomSheet => _showBottomSheet;
   int get selectedFilterIndex => _selectedFilterIndex;
+  String get currencySymbol => _userService.currency;
   @override
   bool get isBusy => _isBusy;
   bool isIncomePieChartTouched(int index) => index == _incomeTouchIndex;
@@ -76,7 +82,7 @@ class ReportViewModel extends BaseViewModel {
     List<double> incomeAmount = [];
     List<double> expensesAmount = [];
   
-    final result = await DataBaseService.instance.readAll(obj: IncomeAndExpenses(), table: incomeAndExpensesTableName);
+    final result = await _dbService.readAll(obj: IncomeAndExpenses(), table: incomeAndExpensesTableName);
     _incomeAndExpenses = result.cast<IncomeAndExpenses>();
 
     final List<IncomeAndExpenses> income = incomeAndExpenses.where((expenses) => expenses.isExpenses == false).toList();

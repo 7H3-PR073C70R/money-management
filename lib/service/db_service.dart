@@ -1,13 +1,19 @@
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/model/budget_model.dart';
-import 'package:money_management/model/incomde_and_expenses_model.dart';
-import 'package:money_management/model/note_model.dart';
+import '../constants/app_string.dart';
+import '../model/budget_expense_model.dart';
+import '../model/budget_model.dart';
+import '../model/incomde_and_expenses_model.dart';
+import '../model/note_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DataBaseService {
-  static final DataBaseService instance = DataBaseService._init();
+  static DataBaseService? _instance;
   static Database? _database;
   DataBaseService._init();
+
+  static Future<DataBaseService> getInstance() async {
+    _instance ??= DataBaseService._init();
+    return _instance!;
+  }
 
   /// This method tries to get the databse, if it already exist then it just return the
   /// database else it call the [_initDB] method to initialize the database.
@@ -47,6 +53,10 @@ class DataBaseService {
     /// Create Table Note
     await db.execute(
         'CREATE TABLE $noteTableName (${NoteField.id} $idType, ${NoteField.title} $textType, ${NoteField.text} $textType, ${NoteField.date} $textType)');
+
+    /// Create Budget Expenses
+    await db.execute(
+        'CREATE TABLE $budgetExpenseTableName (${BudgetExpensesField.id} $idType,  ${BudgetExpensesField.amount} $numType, ${BudgetExpensesField.category} $textType, ${BudgetExpensesField.description} $textType, ${BudgetExpensesField.date} $textType, ${BudgetExpensesField.foreignKey} INTEGER )');
   }
 
   /// This method is responsible for inserting data into the db, the method required the obj
@@ -54,7 +64,7 @@ class DataBaseService {
   /// data you want to save is needed as the method is save generic data to the db and
   /// also the the toJson method to method well.
   Future<dynamic> create({required dynamic obj, required String table}) async {
-    final db = await instance.database;
+    final db = await _instance!.database;
     final id = await db.insert(table, obj.toJson());
     return obj.copyWith(id: id);
   }
@@ -67,7 +77,7 @@ class DataBaseService {
     required int id,
     required dynamic obj,
   }) async {
-    final db = await instance.database;
+    final db = await _instance!.database;
     final result = await db
         .query(table, columns: obj.columns, where: '_id = ?', whereArgs: [id]);
     if (result.isNotEmpty) {
@@ -81,7 +91,7 @@ class DataBaseService {
   /// use of the member class [fromJson] possible.
   Future<List<dynamic>> readAll(
       {required dynamic obj, required String table}) async {
-    final db = await instance.database;
+    final db = await _instance!.database;
     const orderBy = 'date DESC';
     final result = await db.query(table, orderBy: orderBy);
     return result.map((json) => obj.fromJson(json)).toList();
@@ -89,7 +99,7 @@ class DataBaseService {
 
   /// This method update a record in the db.
   Future<int> update({required dynamic obj, required String table}) async {
-    final db = await instance.database;
+    final db = await _instance!.database;
     return db
         .update(table, obj.toJson(), where: '_id = ?', whereArgs: [obj.id]);
   }
@@ -99,13 +109,13 @@ class DataBaseService {
     required String table,
     required int id,
   }) async {
-    final db = await instance.database;
+    final db = await _instance!.database;
     return await db.delete(table, where: '_id = ?', whereArgs: [id]);
   }
 
   /// This method close the db
   Future close() async {
-    final db = await instance.database;
+    final db = await _instance!.database;
     db.close();
   }
 }
