@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stacked_services/stacked_services.dart';
-import '/ui/views/auth/start_up/start_up_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'app/app.locator.dart';
 import 'app/app.router.dart';
