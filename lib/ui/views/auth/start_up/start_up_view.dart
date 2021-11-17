@@ -67,15 +67,15 @@ class StartUpView extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                buildCircle(model.index == 0),
+                                BuildCircle(isIndex: model.index == 0),
                                 const SizedBox(
                                   width: 15,
                                 ),
-                                buildCircle(model.index == 1),
+                                BuildCircle(isIndex: model.index == 1),
                                 const SizedBox(
                                   width: 15,
                                 ),
-                                buildCircle(model.index == 2),
+                                BuildCircle(isIndex: model.index == 2),
                               ],
                             ),
                           )
@@ -83,8 +83,8 @@ class StartUpView extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 35, right: 35, bottom: 44),
+                      padding: const EdgeInsets.only(
+                          left: 35, right: 35, bottom: 44),
                       child: model.index != 2
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,7 +106,7 @@ class StartUpView extends StatelessWidget {
                               ],
                             )
                           : GestureDetector(
-                              onTap:  model.gotoLoginOrSignUP,
+                              onTap: model.gotoLoginOrSignUP,
                               child: Container(
                                 height: 52,
                                 width: 52,
@@ -133,8 +133,14 @@ class StartUpView extends StatelessWidget {
       viewModelBuilder: () => StartUpViewModel(),
     );
   }
+}
 
-  buildCircle(isIndex) {
+class BuildCircle extends StatelessWidget {
+  final bool isIndex;
+  const BuildCircle({Key? key, required this.isIndex}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: isIndex ? 15 : 10,
       width: isIndex ? 15 : 10,

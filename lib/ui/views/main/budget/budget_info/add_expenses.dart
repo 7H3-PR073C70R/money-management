@@ -117,7 +117,7 @@ class AddBudgetExpensesView extends StatelessWidget {
                         BoxButton(
                             title: 'Save',
                             onTap: () {
-                              bimodel.insetBudgetExpenses(
+                              bimodel.insertBudgetExpenses(
                                 expenses :BudgetExpenses(
                                     amount: double.tryParse(model.amount.replaceAll(',', '')),
                                     category: model.category,
@@ -146,7 +146,7 @@ class BuildBottomModelSheet extends StatelessWidget {
   final radius = const Radius.circular(30);
   @override
   Widget build(BuildContext context) {
-    final dataList = expensesCategory;
+    const dataList = expensesCategory;
     return Container(
       height: screenHeiht(context) * 0.5,
       decoration: BoxDecoration(

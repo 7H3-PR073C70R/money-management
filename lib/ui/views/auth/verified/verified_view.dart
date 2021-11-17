@@ -5,7 +5,6 @@ import '../../../../constants/app_image_path.dart';
 import '../../../../constants/app_string.dart';
 import '../../../shared/const_ui_helper.dart';
 import '../../../shared/dumb_widgets/statusbar.dart';
-import '../login/login_view.dart';
 import 'package:stacked/stacked.dart';
 import 'verified_view_model.dart';
 
@@ -34,7 +33,7 @@ class VerifiedView extends StatelessWidget {
                 verticalSpaceLarge,
                 Padding(
                   padding:  EdgeInsets.symmetric(horizontal: screenWidth(context) * 0.1),
-                  child: BoxButton(title: loginOrSignupLoginText, onTap: () => Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => const LoginView())),),
+                  child: BoxButton(title: loginOrSignupLoginText, onTap: model.gotoLogin,),
                 )
               ],
             )

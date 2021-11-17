@@ -14,7 +14,7 @@ class BudgetInfoViewModel extends BaseViewModel {
   final _userService = locator<UserService>();
   final _navigationService = NavigationService();
   final _dbService = locator<DataBaseService>();
-  double _balance = 0;
+  double _expensesAmount = 0;
   final log = getLogger('BudgetInfoViewModel');
   bool _showModelBottomSheet = false;
   get showModelBottomSheet => _showModelBottomSheet;
@@ -32,7 +32,7 @@ class BudgetInfoViewModel extends BaseViewModel {
   List<BudgetExpenses> _expenses = [];
   String get currencySymbol => _userService.currency;
   List<BudgetExpenses> get expenses => _expenses;
-  double get balance => _balance;
+  double get balance => _expensesAmount;
 
   /// This method runs before the widgets in the view loaded and it responsibility is
   /// to get the list of expense related to the budget passed in and also perform some
@@ -46,11 +46,11 @@ class BudgetInfoViewModel extends BaseViewModel {
         .where((expenses) => expenses.foreignKey == budget.id!)
         .toList();
     log.i('Filtered list of expense $_expenses');
-    _balance = budget.amount! - getBalance();
+    _expensesAmount = expensesAmount();
     notifyListeners();
   }
 
-  double getBalance() {
+  double expensesAmount() {
     double totalAmount = 0;
     for (var expense in _expenses) {
       totalAmount += expense.amount!;
@@ -72,28 +72,28 @@ class BudgetInfoViewModel extends BaseViewModel {
     goBack();
   }
 
-  void insetBudgetExpenses({required BudgetExpenses expenses}) async {
+  void insertBudgetExpenses({required BudgetExpenses expenses}) async {
     final expense = await runBusyFuture(
-        _dbService.create(obj: expenses, table: budgetExpenseTableName));
+        _dbService.insert(obj: expenses, table: budgetExpenseTableName));
     _expenses.add(expense);
+    _expensesAmount = expensesAmount();
     log.i(_expenses);
     _navigationService.popRepeated(1);
     notifyListeners();
   }
 
-  void updateBudgetExpenses(
-      {required BudgetExpenses budgetExpenses,
-      required int indexToUpdate}) async {
-    await runBusyFuture(
-        _dbService.update(obj: budgetExpenses, table: budgetExpenseTableName));
-    _expenses.removeAt(indexToUpdate);
-    _expenses.insert(indexToUpdate, budgetExpenses);
+  void deleteBudgetExpenses({required int indexToDelete}) async {
+    await runBusyFuture(_dbService.delete(
+        id: _expenses[indexToDelete].id!, table: budgetExpenseTableName));
+    _expenses.removeAt(indexToDelete);
+    _expensesAmount = expensesAmount();
     notifyListeners();
   }
 
   void gotoAddBudgetExpenses({required model, required budget}) {
     _navigationService.navigateTo(Routes.addBudgetExpensesView,
-        arguments: AddBudgetExpensesViewArguments(model: model, buget: budget));
+        arguments:
+            AddBudgetExpensesViewArguments(bimodel: model, budget: budget));
   }
 
   void setDate(DateTime value) {

@@ -47,7 +47,7 @@ class AddIncomeOrExpensesViewModel extends BaseViewModel {
 
   /// This method call the [DatabaseService] to create a record inside the IncomeAndexpense table.
   void createIncomeOrExpenses(bool isExpenses) async {
-    await _dbService.create(
+    await _dbService.insert(
         obj: IncomeAndExpenses(
             date: DateTime(_date!.year, _date!.month, _date!.day),
             amount: double.tryParse(_amount.replaceAll(',', '')),

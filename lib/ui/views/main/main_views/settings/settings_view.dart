@@ -1,15 +1,12 @@
 import 'package:box_ui/box_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
 import '../../../../../constants/app_image_path.dart';
 import '../../../../../constants/app_string.dart';
 import '../../../../shared/const_ui_helper.dart';
 import '../../../../shared/dumb_widgets/setting_menu_item.dart';
 import '../../../../shared/dumb_widgets/statusbar.dart';
-import '../../../auth/login/login_view.dart';
-import '../../change_currency/change_currency_view.dart';
-import '../../../profile_setting/profile_setting_view.dart';
-import 'package:stacked/stacked.dart';
 import 'settings_view_model.dart';
 
 class SettingsView extends StatelessWidget {
@@ -41,18 +38,12 @@ class SettingsView extends StatelessWidget {
                   SettingsMenuItem(
                       imgPath: profileIcon,
                       text: profileText,
-                      onTap: () {
-                        Navigator.of(context).push(CupertinoPageRoute(
-                            builder: (_) => const ProfileSettingsView()));
-                      }),
+                      onTap: model.gotoProfileSettingsView),
                   verticalSpaceSmall,
                   SettingsMenuItem(
                       imgPath: currencyIcon,
                       text: currencyText,
-                      onTap: () {
-                        Navigator.of(context).push(CupertinoPageRoute(
-                            builder: (_) => const ChangeCurrencyView()));
-                      }),
+                      onTap: model.gotoChangeCurrency),
                   // verticalSpaceSmall,
                   // SettingsMenuItem(
                   //     imgPath: themeIcon,
@@ -69,11 +60,7 @@ class SettingsView extends StatelessWidget {
                       imgPath: logoutIcon,
                       text: logoutText,
                       showArrow: false,
-                      onTap: () {
-                        Navigator.of(context).pushReplacement(
-                            CupertinoPageRoute(
-                                builder: (_) => const LoginView()));
-                      }),
+                      onTap: model.logout),
                 ]),
               )),
         );

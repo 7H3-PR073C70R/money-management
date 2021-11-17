@@ -51,8 +51,8 @@ class SharedPresService {
     removeFromDisk(userDataKey);
   }
 
-  void saveUser(User user) =>
-      saveToDisk(userDataKey, json.encode(user.toJson()));
+  Future<void> saveUser(User user) async =>
+      await saveToDisk(userDataKey, json.encode(user.toJson()));
 
   User? get user {
     var userResponse = getFromDisk(userDataKey);

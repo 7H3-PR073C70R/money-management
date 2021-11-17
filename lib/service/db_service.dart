@@ -63,10 +63,14 @@ class DataBaseService {
   /// you want to save as well as the table the data is to be saved in. The obj of the
   /// data you want to save is needed as the method is save generic data to the db and
   /// also the the toJson method to method well.
-  Future<dynamic> create({required dynamic obj, required String table}) async {
-    final db = await _instance!.database;
-    final id = await db.insert(table, obj.toJson());
-    return obj.copyWith(id: id);
+  Future<dynamic> insert({required dynamic obj, required String table}) async {
+    try {
+      final db = await _instance!.database;
+      final id = await db.insert(table, obj.toJson());
+      return obj.copyWith(id: id);
+    } catch (e) {
+      return;
+    }
   }
 
   /// This method read that from local storage, the only reason the method is requesting

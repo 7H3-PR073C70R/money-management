@@ -14,6 +14,7 @@ class BoxInputField extends StatelessWidget {
   final TextInputType? keyboardType;
   final void Function()? onVisibilityPressed;
   final void Function(String value)? onChanged;
+  final String? Function(String?)? validator;
   const BoxInputField(
       {Key? key,
       this.passwordVisibility = false,
@@ -21,6 +22,7 @@ class BoxInputField extends StatelessWidget {
       this.placeHolder,
       this.onChanged,
       this.keyboardType,
+      this.validator,
       this.label,
       this.focusNode,
       this.maxLines = 1,
@@ -49,10 +51,11 @@ class BoxInputField extends StatelessWidget {
           ),
         Stack(
           children: [
-            TextField(
+            TextFormField(
               controller: controller,
               style: const TextStyle(height: 1),
               keyboardType: keyboardType,
+              validator: validator,
               focusNode: focusNode,
               onChanged: onChanged,
               enabled: enabled,
@@ -60,6 +63,7 @@ class BoxInputField extends StatelessWidget {
               obscureText: passwordVisibility,
               decoration: InputDecoration(
                 hintText: placeHolder,
+                errorMaxLines: 3,
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 border: circularBorder.copyWith(
