@@ -6,8 +6,6 @@ import '../../../../constants/app_string.dart';
 import '../../../shared/const_color_helper.dart';
 import '../../../shared/const_ui_helper.dart';
 import '../../../shared/dumb_widgets/build_label_container.dart';
-import '../../../shared/dumb_widgets/nav_bar.dart';
-import '../main_view_model.dart';
 import 'package:stacked/stacked.dart';
 import 'budget_view_model.dart';
 

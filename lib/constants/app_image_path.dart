@@ -27,3 +27,4 @@ const String lockIcon = 'assets/images/lock_icon.svg';
 const String logoutIcon = 'assets/images/logout_icon.svg';
 const String profileIcon = 'assets/images/profile_icon.svg';
 const String defaultDPSvg = 'assets/images/no_image.svg';
+const String moonIcon = 'assets/images/moon.svg';

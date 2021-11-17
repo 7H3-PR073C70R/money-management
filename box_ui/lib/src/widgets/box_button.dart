@@ -21,6 +21,11 @@ class BoxButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final buttonColor = isLogin
+        ? Colors.white
+        : isSignUp
+            ? Colors.transparent
+            : kcPrimaryColor;
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -29,12 +34,8 @@ class BoxButton extends StatelessWidget {
         height: 48,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: color != null ? color : isLogin
-                ? Colors.white
-                : isSignUp
-                    ? Colors.transparent
-                    : kcPrimaryColor,
-            border: Border.all(color: isSignUp ? Colors.white :kcPrimaryColor),
+            color: color ?? buttonColor,
+            border: Border.all(color: isSignUp ? Colors.white : kcPrimaryColor),
             borderRadius: BorderRadius.circular(8)),
         child: !isBusy
             ? BoxText.buttonStyle(

@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import '../../../../app/app.router.dart';
 import 'package:stacked_services/stacked_services.dart';
-import '../login_or_signup/login_or_signup_view.dart';
 import 'package:stacked/stacked.dart';
 
 class StartUpViewModel extends BaseViewModel {

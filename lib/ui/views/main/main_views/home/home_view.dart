@@ -69,20 +69,20 @@ class HomeView extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text('Good morning',
+                              Text(model.greeting,
                                   style: heading6Style.copyWith(
                                       color: Colors.white,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400)),
                               horizontalSpaceVeryTiny,
-                              SvgPicture.asset(sunIcon),
+                              SvgPicture.asset(!model.greeting.contains('Evening') ? sunIcon : moonIcon, height: 25, color: Colors.yellowAccent),
                               const Spacer(),
                               IconButton(
                                   onPressed: model.navigateToNoteView,
                                   icon: SvgPicture.asset(noteIcon))
                             ],
                           ),
-                          Text('Protector',
+                          Text('${model.userFirstName}',
                               style: heading6Style.copyWith(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -97,7 +97,7 @@ class HomeView extends StatelessWidget {
                             child: const Center(
                               child: CircularProgressIndicator(),
                             ))
-                        : model.incomeAndExpenses.isEmpty
+                        : model.incomeAndExpenses.isEmpty && model.selectedFilterIndex == -1
                             ? SizedBox(
                                 height: screenHeiht(context) * 0.6,
                                 child: const NoItem(

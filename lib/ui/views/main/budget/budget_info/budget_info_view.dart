@@ -20,8 +20,10 @@ class BudgetInfoView extends StatelessWidget {
     final args =
         ModalRoute.of(context)!.settings.arguments as BudgetInfoViewArguments;
     final budget = args.budget;
+    final amountController = TextEditingController();
     return ViewModelBuilder<BudgetInfoViewModel>.reactive(
       viewModelBuilder: () => BudgetInfoViewModel(),
+      onDispose: (model) => amountController.dispose(),
       onModelReady: (model) => model.init(budget),
       builder: (
         BuildContext context,
@@ -40,14 +42,43 @@ class BudgetInfoView extends StatelessWidget {
               leading: IconButton(
                   onPressed: model.goBack,
                   icon: const Icon(Icons.arrow_back, color: Colors.black)),
-              actions: [
-                TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Edit',
-                      style: heading6Style.copyWith(color: kcPrimaryColor),
-                    ))
-              ],
+              // actions: [
+              //   Padding(
+              //     padding: const EdgeInsets.only(right: 15.0),
+              //     child: IconButton(
+              //         onPressed: () {
+              //           showDialog(
+              //               context: context,
+              //               builder: (context) => AlertDialog(
+              //                     title: const Text('Increase Budget'),
+              //                     content: SizedBox(
+              //                       height: screenHeiht(context) * 0.2,
+              //                       child: Column(
+              //                         children: [
+              //                           BoxInputField(
+              //                             label: 'Amount',
+              //                             placeHolder: budget.amount.toString(),
+              //                             controller: amountController,
+              //                           ),
+              //                           verticalSpaceSmall,
+              //                           BoxButton(
+              //                             title: 'Save',
+              //                             onTap: () => model.updateBudget(
+              //                                 budget.copyWith(
+              //                                     amount: double.tryParse(
+              //                                         amountController.text))),
+              //                           )
+              //                         ],
+              //                       ),
+              //                     ),
+              //                   ));
+              //         },
+              //         icon: const Icon(
+              //           Icons.edit,
+              //           color: kcPrimaryColor,
+              //         )),
+              //   )
+              // ],
             ),
             floatingActionButton: FloatingActionButton(
                 onPressed: () =>
@@ -68,7 +99,7 @@ class BudgetInfoView extends StatelessWidget {
                       ),
                       BuildAmountContainer(
                         title: budgetBalanceText,
-                        amount: model.balance,
+                        amount: budget.amount! - model.balance,
                         currencySymbol: model.currencySymbol,
                       ),
                     ],
@@ -87,14 +118,61 @@ class BudgetInfoView extends StatelessWidget {
                           ),
                           itemBuilder: (context, index) => Padding(
                             padding: const EdgeInsets.only(top: 18),
-                            child: BuildInfoContainer(
-                              price:
-                                  '${model.currencySymbol}${NumberFormat('#,###').format(model.expenses[index].amount!)}',
-                              description:
-                                  '${model.expenses[index].description}',
-                              category: '${model.expenses[index].category}',
-                              date: DateFormat('dd MMM, yyyy hh:mm')
-                                  .format(model.expenses[index].date!),
+                            child: Dismissible(
+                              key: const Key('value'),
+                              onDismissed: (_) {
+                                model.deleteBudgetExpenses(
+                                    indexToDelete: index);
+                              },
+                              background: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Icon(Icons.delete,
+                                      color: Theme.of(context).errorColor),
+                                ),
+                              ),
+                              confirmDismiss: (_) async {
+                                bool value = false;
+                                await showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  value = false;
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('No')),
+                                            TextButton(
+                                                onPressed: () {
+                                                  value = true;
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Yes')),
+                                          ],
+                                          title: Text('Warning!!!',
+                                              style: heading6Style.copyWith(
+                                                  color: Theme.of(context)
+                                                      .errorColor)),
+                                          content: const Text(
+                                            'Are you sure want to delete this budget?',
+                                            maxLines: 2,
+                                            style: bodyStyle,
+                                          ),
+                                        ));
+                                return Future.value(value);
+                              },
+                              child: BuildInfoContainer(
+                                price:
+                                    '${model.currencySymbol}${NumberFormat('#,###').format(model.expenses[index].amount!)}',
+                                description:
+                                    '${model.expenses[index].description}',
+                                category: '${model.expenses[index].category}',
+                                date: DateFormat('dd MMM, yyyy')
+                                    .format(model.expenses[index].date!),
+                              ),
                             ),
                           ),
                         ),

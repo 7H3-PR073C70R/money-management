@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:money_management/model/budget_expense_model.dart';
+import '../../../../model/budget_expense_model.dart';
 import '../../../../app/app.locator.dart';
 import '../../../../app/app.router.dart';
 import '../../../../constants/app_string.dart';
@@ -136,7 +136,7 @@ class BudgetViewModel extends BaseViewModel {
         date: _date,
         amount: double.tryParse(_amount.replaceAll(',', '')));
     final result = await runBusyFuture(
-        _dbService.create(obj: budget, table: budgetTableName));
+        _dbService.insert(obj: budget, table: budgetTableName));
     budget = result as Budget;
     _budgets.insert(0, budget);
 

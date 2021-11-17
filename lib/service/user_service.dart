@@ -7,7 +7,6 @@ class UserService {
   final _sharedPrefsService = locator<SharedPresService>();
   User get user {
       return _sharedPrefsService.user ?? User(
-        id: '',
         fname: 'toxic',
         lname: 'bishop',
         email: 'toxic@bishop.com',

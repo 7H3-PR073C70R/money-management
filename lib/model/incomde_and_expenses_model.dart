@@ -61,5 +61,6 @@ class IncomeAndExpenses {
     IncomeAndExpensesField.isExpenses: isExpenses! ? 1 : 0
   };
 
+  static final instance = IncomeAndExpenses();
   final List<String> columns = [IncomeAndExpensesField.id, IncomeAndExpensesField.amount, IncomeAndExpensesField.category, IncomeAndExpensesField.description, IncomeAndExpensesField.date, IncomeAndExpensesField.isExpenses];
 }

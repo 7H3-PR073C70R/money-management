@@ -1,4 +1,4 @@
-import 'package:money_management/app/app.logger.dart';
+import '../../../../../app/app.logger.dart';
 
 import '../../../../../app/app.locator.dart';
 import '../../../../../app/app.router.dart';
@@ -21,6 +21,21 @@ class HomeViewModel extends BaseViewModel {
   bool _isBusy = true;
   double _totalIncome = 0;
   double _totalExpenses = 0;
+
+  String? get userFirstName => _userService.user.fname;
+  String get greeting {
+    int hour = DateTime.now().hour;
+    bool isMorning = hour < 12;
+    bool isAfternoon = hour >= 12 && hour <= 15;
+
+    if(isMorning) {
+      return goodMorningText;
+    } else if (isAfternoon) {
+      return goodAfternoonText;
+    } else  {
+      return goodEveningText;
+    }
+  }
 
   List<IncomeAndExpenses> _incomeAndExpenses = [];
   List<IncomeAndExpenses> _filteredIncomeAndExpenses = [];

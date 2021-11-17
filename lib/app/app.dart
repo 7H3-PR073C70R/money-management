@@ -1,8 +1,10 @@
+import 'package:money_management/ui/views/main/change_password/change_password_view.dart';
+import 'package:money_management/ui/views/splash/splash_view.dart';
+
 import '../service/db_service.dart';
 import '../service/shared_prefs.dart';
 import '../service/user_service.dart';
 import '../ui/views/auth/confirm_email/confirm_email_view.dart';
-import '../ui/views/auth/email_verification/email_verification_view.dart';
 import '../ui/views/auth/forget_password/forget_password_view.dart';
 import '../ui/views/auth/login/login_view.dart';
 import '../ui/views/auth/login_or_signup/login_or_signup_view.dart';
@@ -24,11 +26,11 @@ import 'package:stacked/stacked_annotations.dart';
 
 @StackedApp(
   routes: [
+    CupertinoRoute(page: SplashView, initial: true),
     CupertinoRoute(page: StartUpView),
     CupertinoRoute(page: LoginView),
     CupertinoRoute(page: SignUpView),
     CupertinoRoute(page: LoginOrSignUpView),
-    CupertinoRoute(page: EmailVarificationView),
     CupertinoRoute(page: ConfirmEmailView),
     CupertinoRoute(page: VerifiedView),
     CupertinoRoute(page: ForgetPasswordView),
@@ -43,6 +45,7 @@ import 'package:stacked/stacked_annotations.dart';
     CupertinoRoute(page: ReadNoteView),
     CupertinoRoute(page: BudgetInfoView),
     CupertinoRoute(page: AddBudgetExpensesView),
+    CupertinoRoute(page: ChangePasswordView),
   ],
   dependencies: [
     Presolve(

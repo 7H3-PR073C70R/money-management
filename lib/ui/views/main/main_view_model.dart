@@ -1,8 +1,64 @@
+import 'package:money_management/app/app.locator.dart';
+import 'package:money_management/app/app.logger.dart';
+import 'package:money_management/constants/app_string.dart';
+import 'package:money_management/model/budget_expense_model.dart';
+import 'package:money_management/model/budget_model.dart';
+import 'package:money_management/model/incomde_and_expenses_model.dart';
+import 'package:money_management/model/note_model.dart';
+import 'package:money_management/service/db_service.dart';
+import 'package:money_management/service/online_db_service.dart';
 import 'package:stacked/stacked.dart';
 
 MainViewModel mainViewModel = MainViewModel();
 
 class MainViewModel extends BaseViewModel {
+  final _onlineDb = OnlineDbService();
+  final _dbService = locator<DataBaseService>();
+  final log = getLogger('MainViewModel');
+
+
+
+  Future<void> init() async {
+    log.i('started');
+    
+    //! Fetch income and expenses from locally db on setup.
+    final incomeAndExpensesResult = await runBusyFuture(_dbService.readAll(
+        obj: IncomeAndExpenses(), table: incomeAndExpensesTableName));
+    final incomeAndExpenses = incomeAndExpensesResult.cast<IncomeAndExpenses>();
+
+
+    //! Fetch budget from locally db on setup.
+    final List<dynamic> budgetResult =
+        await _dbService.readAll(obj: Budget(), table: budgetTableName);
+    final budgets  = budgetResult.cast<Budget>();
+
+    //! Fetch note from locally db on setup.
+    final noteResult =
+        await _dbService.readAll(obj: Note(), table: noteTableName);
+    final notes = noteResult.cast<Note>();
+
+    //! Fetch budget expenses from locally db on setup.
+    final budgetExpensesResult = await _dbService.readAll(
+        obj: BudgetExpenses(), table: budgetExpenseTableName);
+    final budgetExpenses = budgetExpensesResult.cast<BudgetExpenses>();
+
+    //! Upload local data to firebase.
+    _onlineDb.addIncomeAndExpenses(incomeAndExpenses);
+    _onlineDb.addBudgets(budgets);
+    _onlineDb.addNotes(notes);
+    _onlineDb.addBudgetExpenses(budgetExpenses);
+
+    log.i('done updating data');
+
+    //! Fetch data from firebase on login and save it locally.
+    _onlineDb.getAllIncomeAndExpenses();
+    _onlineDb.getAllBudgetExpenses();
+    _onlineDb.getAllBudgets();
+    _onlineDb.getAllNotes();
+
+    log.i('done gettig data from online db');
+  }
+  
   int _currentPageIndex = 0;
   int get currentPageIndex => _currentPageIndex;
   bool _isFabPressed = false;

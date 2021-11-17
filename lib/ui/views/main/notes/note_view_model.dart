@@ -73,7 +73,7 @@ class NoteViewModel extends BaseViewModel {
   }
 
   void createNote(Note note) async {
-    final addedNote = await _dbService.create(
+    final addedNote = await _dbService.insert(
         obj: note.copyWith(date: DateTime.now()), table: noteTableName);
     _notes.insert(0, addedNote);
     notifyListeners();

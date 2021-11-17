@@ -1,5 +1,6 @@
 const String checkEmailText = 'Please check your email';
-const String confirmEmailMessageText = 'A confirmation link as been sent to your email address';
+const String confirmEmailMessageText = 'A confirmation link has been sent to your email address. ';
+const String resetLinkSent = 'A password reset link has been sent to your email address. ';
 const String verificationText = 'Verification';
 const String emailText = 'Email ';
 const String weSentVerificationText = 'We’ve sent a verification code to your email address';
@@ -9,7 +10,7 @@ const String verifyText = 'Verify';
 const String cancelText ='CANCEL';
 const String pleaseCheckText = 'Please check';
 const String emailPlaceHolderText = ' youremail@email.com';
-const String forLinkText = ' for link';
+const String forLinkText = ' for link.';
 const String loginText = 'Login';
 const String loginOrSignupLoginText = 'Log In';
 const String loginOrSignupSignupText = 'Sign Up';
@@ -89,6 +90,13 @@ const String noDataFound = 'NO DATA FOUND WITH THE SELECTED FILTER OPTION.';
 const String resetText = 'Reset';
 const String budgetTotalText = 'BUDGET TOTAL';
 const String budgetBalanceText = 'BUDGET BALANCE';
+const String networkErrorText = 'A network error occured. Please check your internet connection and try agian.';
+const String invalidCredentialText = 'Invalid crendentials. Please try again';
+const String emailAlreadyExit = 'A User with that email already exit. Try logging in';
+const String defaultImageurl = 'https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png';
+const String goodMorningText = 'It\'s a new day';
+const String goodAfternoonText = 'Good Afternoon';
+const String goodEveningText = 'Good Evening';
 const List<String> incomeCategory = [
     'Salary',
     'Business',
