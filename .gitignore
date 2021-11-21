@@ -33,6 +33,7 @@
 /Web/
 /windows/
 /winuwp/
+pubspec.lock
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -47,3 +48,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Generared App File
+/lib/app/app.*.dart
+
+# key properties
+key.properties
+app/upload-keystore.jks

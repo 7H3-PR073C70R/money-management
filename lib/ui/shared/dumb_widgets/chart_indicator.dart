@@ -2,11 +2,13 @@ import 'package:box_ui/box_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:intl/intl.dart';
-import 'package:money_management/ui/shared/const_ui_helper.dart';
+import '../../../app/app.locator.dart';
+import '../../../service/user_service.dart';
+import '../const_ui_helper.dart';
 
 class ChartIndicator extends StatelessWidget {
   final Color color;
-  final int amount;
+  final double amount;
   final String value;
   const ChartIndicator(
       {Key? key,
@@ -17,6 +19,7 @@ class ChartIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final currencySymbol = locator<UserService>().currency;
     return Row(children: [
       Container(
         height: 20,
@@ -31,7 +34,7 @@ class ChartIndicator extends StatelessWidget {
       const Spacer(),
       SizedBox(
         width: screenWidth(context) * 0.3,
-        child: Text('N${NumberFormat('#,###').format(amount)}',
+        child: Text('$currencySymbol${NumberFormat('#,###.##').format(amount)}',
             maxLines: 2,
             textAlign: TextAlign.right,
             overflow: TextOverflow.ellipsis,

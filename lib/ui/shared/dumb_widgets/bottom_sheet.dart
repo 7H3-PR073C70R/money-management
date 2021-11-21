@@ -2,8 +2,8 @@ import 'package:box_ui/box_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:money_management/constants/app_image_path.dart';
-import 'package:money_management/constants/app_string.dart';
+import '../../../constants/app_image_path.dart';
+import '../../../constants/app_string.dart';
 import '../const_color_helper.dart';
 import '../const_ui_helper.dart';
 
@@ -12,10 +12,12 @@ class BuildBottomSheet extends StatelessWidget {
   final int selectedFilterIndex;
   final Function(int index) setSelectedFilterIndex;
   final VoidCallback setShowBottomSheet;
+  final VoidCallback onReset;
   BuildBottomSheet(
       {Key? key,
       required this.selectedFilterIndex,
       required this.setSelectedFilterIndex,
+      required this.onReset,
       required this.setShowBottomSheet})
       : super(key: key);
 
@@ -27,7 +29,7 @@ class BuildBottomSheet extends StatelessWidget {
   ];
 
   String getMonth() {
-    final int _currentMonthIndex = DateTime.now().month;
+    final int _currentMonthIndex = DateTime.now().month - 1;
     switch (_currentMonthIndex) {
       case 1:
         return 'Jan 1 - 31';
@@ -82,7 +84,13 @@ class BuildBottomSheet extends StatelessWidget {
                         ),
                         onPressed: setShowBottomSheet),
                   )),
-              BoxText.headingSix(filterByDateText),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  BoxText.headingSix(filterByDateText),
+                  TextButton(onPressed: onReset, child: Text(resetText, style: heading6Style.copyWith(color: kcPrimaryColor, fontSize: 15),),)
+                ],
+              ),
               verticalSpaceVeryTiny,
               Expanded(
                 child: Column(
@@ -138,7 +146,7 @@ class Filter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 37.0),
-      child: GestureDetector(
+      child: InkWell(
         onTap: onTap,
         child: Row(
           children: [

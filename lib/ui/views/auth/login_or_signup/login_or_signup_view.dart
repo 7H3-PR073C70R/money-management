@@ -1,8 +1,8 @@
 import 'package:box_ui/box_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:money_management/constants/app_image_path.dart';
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
+import '../../../../constants/app_image_path.dart';
+import '../../../../constants/app_string.dart';
+import '../../../shared/dumb_widgets/statusbar.dart';
 import 'login_or_signup_view_model.dart';
 import 'package:stacked/stacked.dart';
 
@@ -29,7 +29,7 @@ class LoginOrSignUpView extends StatelessWidget {
                   BoxButton(
                     title: loginOrSignupLoginText,
                     isLogin: true,
-                    onTap: () => model.gotoLogin(context),
+                    onTap: model.gotoLogin,
                   ),
                   const SizedBox(
                     height: 32,
@@ -37,9 +37,7 @@ class LoginOrSignUpView extends StatelessWidget {
                   BoxButton(
                     title: loginOrSignupSignupText,
                     isSignUp: true,
-                    onTap: (){
-                      model.gotoSignUP(context);
-                    },
+                    onTap: model.gotoSignUP
                   ),
                   const SizedBox(
                     height: 32,

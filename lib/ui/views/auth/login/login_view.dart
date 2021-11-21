@@ -2,34 +2,32 @@ import 'package:box_ui/box_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:money_management/constants/app_image_path.dart';
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/ui/shared/const_color_helper.dart';
-import 'package:money_management/ui/shared/const_ui_helper.dart';
-import 'package:money_management/ui/shared/dumb_widgets/rich_text.dart';
-import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
-import 'package:money_management/ui/views/auth/forget_password/forget_password_view.dart';
-import 'package:money_management/ui/views/auth/sign_up/signup_view.dart';
-import 'package:money_management/ui/views/main/main_view.dart';
+import 'package:flutter/services.dart';
+import '../../../../constants/validator.dart';
+import '../../../../constants/app_image_path.dart';
+import '../../../../constants/app_string.dart';
+import '../../../shared/const_color_helper.dart';
+import '../../../shared/const_ui_helper.dart';
+import '../../../shared/dumb_widgets/rich_text.dart';
+import '../../../shared/dumb_widgets/statusbar.dart';
 import 'login_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class LoginView extends StatelessWidget {
-  const LoginView({Key? key}) : super(key: key);
+  LoginView({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final height = screenHeiht(context);
     return ViewModelBuilder<LoginViewModel>.reactive(
       builder: (context, model, child) => StatusBar(
         child: Scaffold(
             backgroundColor: Colors.white,
             body: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 37),
-                child: SingleChildScrollView(
-                  child: SizedBox(
-                    height: height,
+                padding: const EdgeInsets.symmetric(horizontal: 37, vertical: 32),
+                child: Center(
+                  child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -41,27 +39,55 @@ class LoginView extends StatelessWidget {
                           fillDetailText,
                           style: heading6Style.copyWith(color: kcNeutral3),
                         ),
-                        verticalSpaceExtraLarge,
-                        BoxInputField(placeHolder: emailPlaceHolderText),
-                        verticalSpaceMedium,
-                        BoxInputField(
-                          placeHolder: passwordPlaceHolder,
-                          isPassword: true,
-                          onVisibilityPressed: model.setIsPasswordVisible,
-                          passwordVisibility: model.isPasswordVisible,
+                       
+                        if (model.hasError)
+                          Column(
+                            children: [
+                              verticalSpaceSmall,
+                              Text(
+                                model.modelError.toString().contains('network')
+                                    ? networkErrorText
+                                    : invalidCredentialText,
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                style: bodyStyle.copyWith(
+                                    color: Theme.of(context).errorColor),
+                              ),
+                            ],
+                          ),
+                        verticalSpaceSmall,
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              BoxInputField(
+                                placeHolder: emailPlaceHolderText,
+                                onChanged: model.setEmail,
+                                validator: context.validateEmail,
+                                keyboardType: TextInputType.emailAddress,
+                              ),
+                              verticalSpaceMedium,
+                              BoxInputField(
+                                placeHolder: passwordPlaceHolder,
+                                isPassword: true,
+                                onChanged: model.setPassword,
+                                onVisibilityPressed: model.setIsPasswordVisible,
+                                passwordVisibility: model.isPasswordVisible,
+                                validator: (text) =>
+                                    context.validatePassword(text, false),
+                              ),
+                            ],
+                          ),
                         ),
                         verticalSpaceVeryTiny,
                         SizedBox(
                           width: double.infinity,
-                          child: GestureDetector(
-                            onTap: () => Navigator.of(context).push(
-                                CupertinoPageRoute(
-                                    builder: (context) =>
-                                        const ForgetPasswordView())),
+                          child: InkWell(
+                            onTap: model.navigateToForgetPassword,
                             child: Text(
                               forgetPasswordText,
                               textAlign: TextAlign.right,
-                              style: heading6Style.copyWith(
+                              style: bodyStyle.copyWith(
                                 color: kcBlue1,
                               ),
                             ),
@@ -69,33 +95,33 @@ class LoginView extends StatelessWidget {
                         ),
                         verticalSpaceSmall,
                         BoxButton(
+                            isBusy: model.isBusy,
                             title: loginOrSignupLoginText,
-                            onTap: () => Navigator.of(context).pushReplacement(
-                                CupertinoPageRoute(
-                                    builder: (context) =>  const MainView()))),
+                            onTap: () {
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              }
+                              model.login();
+                            }),
                         verticalSpaceSmall,
                         Align(
-                          alignment: Alignment.bottomRight,
+                          alignment: Alignment.bottomCenter,
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 8.0),
                             child: RichText(
-                                textAlign: TextAlign.right,
+                                textAlign: TextAlign.center,
                                 text: TextSpan(
                                     text: dontHaveAnAcctText,
-                                    style: heading6Style.copyWith(
-                                        color: Colors.black),
+                                    style:
+                                        bodyStyle.copyWith(color: Colors.black),
                                     children: [
                                       TextSpan(
                                           text: loginOrSignupSignupText,
-                                          style: heading6Style.copyWith(
+                                          style: bodyStyle.copyWith(
                                             color: kcBlue1,
                                           ),
                                           recognizer: TapGestureRecognizer()
-                                            ..onTap = () => Navigator.of(context)
-                                                .pushReplacement(
-                                                    CupertinoPageRoute(
-                                                        builder: (context) =>
-                                                            const SignUpView())))
+                                            ..onTap = model.navigateToSignUpView)
                                     ])),
                           ),
                         )
@@ -107,7 +133,6 @@ class LoginView extends StatelessWidget {
             )),
       ),
       viewModelBuilder: () => LoginViewModel(),
-      onDispose: (model) {},
     );
   }
 }

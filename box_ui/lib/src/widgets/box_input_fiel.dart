@@ -9,22 +9,23 @@ class BoxInputField extends StatelessWidget {
   final bool enabled;
   final bool passwordVisibility;
   final String? label;
-  final int? maxLines;
+  final FocusNode? focusNode;
+  final int maxLines;
   final TextInputType? keyboardType;
   final void Function()? onVisibilityPressed;
   final void Function(String value)? onChanged;
-  final circularBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8),
-  );
-  BoxInputField(
+  final String? Function(String?)? validator;
+  const BoxInputField(
       {Key? key,
       this.passwordVisibility = false,
       this.controller,
       this.placeHolder,
       this.onChanged,
       this.keyboardType,
+      this.validator,
       this.label,
-      this.maxLines,
+      this.focusNode,
+      this.maxLines = 1,
       this.isPassword = false,
       this.enabled = true,
       this.onVisibilityPressed})
@@ -32,6 +33,9 @@ class BoxInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final circularBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(8),
+  );
     return Column(
       children: [
         if (label != null)
@@ -47,16 +51,19 @@ class BoxInputField extends StatelessWidget {
           ),
         Stack(
           children: [
-            TextField(
+            TextFormField(
               controller: controller,
               style: const TextStyle(height: 1),
               keyboardType: keyboardType,
+              validator: validator,
+              focusNode: focusNode,
               onChanged: onChanged,
               enabled: enabled,
               maxLines: maxLines,
               obscureText: passwordVisibility,
               decoration: InputDecoration(
                 hintText: placeHolder,
+                errorMaxLines: 3,
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 border: circularBorder.copyWith(

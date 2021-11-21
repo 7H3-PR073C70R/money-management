@@ -8,18 +8,25 @@ class BoxButton extends StatelessWidget {
   final bool isLogin;
   final bool isSignUp;
   final void Function()? onTap;
+  final Color? color;
   const BoxButton(
       {required this.title,
       this.isBusy = false,
       this.onTap,
       this.isLogin = false,
       this.isSignUp = false,
+      this.color,
       Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    final buttonColor = isLogin
+        ? Colors.white
+        : isSignUp
+            ? Colors.transparent
+            : kcPrimaryColor;
+    return InkWell(
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 350),
@@ -27,12 +34,8 @@ class BoxButton extends StatelessWidget {
         height: 48,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: isLogin
-                ? Colors.white
-                : isSignUp
-                    ? Colors.transparent
-                    : kcPrimaryColor,
-            border: Border.all(color: isSignUp ? Colors.white :kcPrimaryColor),
+            color: color ?? buttonColor,
+            border: Border.all(color: isSignUp ? Colors.white : kcPrimaryColor),
             borderRadius: BorderRadius.circular(8)),
         child: !isBusy
             ? BoxText.buttonStyle(

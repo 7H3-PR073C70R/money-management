@@ -1,22 +1,25 @@
+import 'package:intl/intl.dart';
+import '../../../../app/app.locator.dart';
+import '../../../../constants/app_string.dart';
+import '../../../../model/incomde_and_expenses_model.dart';
+import '../../../../service/db_service.dart';
 import 'package:stacked/stacked.dart';
 
 class AddIncomeOrExpensesViewModel extends BaseViewModel {
+  final _dbService = locator<DataBaseService>();
   bool _showModelBottomSheet = false;
   get showModelBottomSheet => _showModelBottomSheet;
 
-  final List<String> _incomeCategory = ['Salary', 'Business', 'Investment Return', 'Cash Gift', 'Others'];
-  final List<String> _expensesCategory = ['Rent', 'Food', 'Health', 'Data', 'Entertainment', 'Clothing', 'Electricity', 'Transportation', 'Others'];
-
-  List<String> get incomeCategory => _incomeCategory;
-  List<String> get expensesCategory => _expensesCategory;
+  String _amount = '';
+  String _description = '';
 
   String _category = '';
   get category => _category;
-  
-  String _date = '';
-  get date => _date;
 
-  void setDate(String value){
+  DateTime? _date;
+  String get date => _date != null ? DateFormat('dd MMM, yyyy').format(_date!) : '';
+
+  void setDate(DateTime value) {
     _date = value;
     notifyListeners();
   }
@@ -27,8 +30,30 @@ class AddIncomeOrExpensesViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void setShowModelBottomSheet(){
+  void setShowModelBottomSheet() {
     _showModelBottomSheet = !_showModelBottomSheet;
     notifyListeners();
+  }
+
+  void setAmount(String value) {
+    _amount = value;
+    notifyListeners();
+  }
+
+  void setDescription(String value) {
+    _description = value;
+    notifyListeners();
+  }
+
+  /// This method call the [DatabaseService] to create a record inside the IncomeAndexpense table.
+  void createIncomeOrExpenses(bool isExpenses) async {
+    await _dbService.insert(
+        obj: IncomeAndExpenses(
+            date: DateTime(_date!.year, _date!.month, _date!.day),
+            amount: double.tryParse(_amount.replaceAll(',', '')),
+            description: _description,
+            category: _category,
+            isExpenses: isExpenses),
+        table: incomeAndExpensesTableName);
   }
 }

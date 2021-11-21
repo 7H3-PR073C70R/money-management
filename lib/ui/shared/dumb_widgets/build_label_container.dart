@@ -8,7 +8,7 @@ class BuildLabelContainer extends StatelessWidget {
   final Widget child;
   final String label;
   const BuildLabelContainer(
-      {Key? key, required this.label, required this.child})
+      {Key? key, required this.label, required this.child,})
       : super(key: key);
 
   @override

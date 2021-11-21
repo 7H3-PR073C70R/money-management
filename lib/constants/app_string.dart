@@ -1,5 +1,6 @@
 const String checkEmailText = 'Please check your email';
-const String confirmEmailMessageText = 'A confirmation link as been sent to your email address';
+const String confirmEmailMessageText = 'A confirmation link has been sent to your email address. ';
+const String resetLinkSent = 'A password reset link has been sent to your email address. ';
 const String verificationText = 'Verification';
 const String emailText = 'Email ';
 const String weSentVerificationText = 'We’ve sent a verification code to your email address';
@@ -9,7 +10,7 @@ const String verifyText = 'Verify';
 const String cancelText ='CANCEL';
 const String pleaseCheckText = 'Please check';
 const String emailPlaceHolderText = ' youremail@email.com';
-const String forLinkText = ' for link';
+const String forLinkText = ' for link.';
 const String loginText = 'Login';
 const String loginOrSignupLoginText = 'Log In';
 const String loginOrSignupSignupText = 'Sign Up';
@@ -48,7 +49,8 @@ const String lastMonthText =  'Last Month';
 const String addNotesText = 'Add Notes';
 const String addIncomeText = 'Add Income';
 const String addExpenseText = 'Add Expenses';
-const String noItemText = 'There are no income or expense to track';
+const String noItemText = 'There are no income or expense to track. Please click on the add button to add income or expenses.';
+const String noItemBudgetText = 'There are no budget to track. Please click on the add button to add budget.';
 const String noItemButtonText = 'Create A Budget';
 const String incomeText = 'Income';
 const String expenseText = 'Expenses';
@@ -76,3 +78,40 @@ const String changeDefaultCurrencyText = 'Change Default Currency';
 const String defaultText = 'default';
 const String darkText = 'Dark';
 const String lightText = 'Light';
+const String dbName = 'money_management.db';
+const String noteTableName = 'Notes';
+const String budgetExpenseTableName = 'Budget_Expenses';
+const String noExpensesAssociatedText = 'No expeneses asscoiated with this budget yet. Click the plus button to start adding expenses';
+const String incomeAndExpensesTableName = 'Income_And_Expenses';
+const String budgetTableName = 'Budget';
+const String noNoteText = 'There\'s No Note to display';
+const String noNoteButtonText = 'Create A Note';
+const String noDataFound = 'NO DATA FOUND WITH THE SELECTED FILTER OPTION.';
+const String resetText = 'Reset';
+const String budgetTotalText = 'BUDGET TOTAL';
+const String budgetBalanceText = 'BUDGET BALANCE';
+const String networkErrorText = 'A network error occured. Please check your internet connection and try agian.';
+const String invalidCredentialText = 'Invalid crendentials. Please try again';
+const String emailAlreadyExit = 'A User with that email already exit. Try logging in';
+const String defaultImageurl = 'https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png';
+const String goodMorningText = 'It\'s a new day';
+const String goodAfternoonText = 'Good Afternoon';
+const String goodEveningText = 'Good Evening';
+const List<String> incomeCategory = [
+    'Salary',
+    'Business',
+    'Investment Return',
+    'Cash Gift',
+    'Others'
+  ];
+const List<String> expensesCategory = [
+    'Rent',
+    'Food',
+    'Health',
+    'Data',
+    'Entertainment',
+    'Clothing',
+    'Electricity',
+    'Transportation',
+    'Others'
+  ];
