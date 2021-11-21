@@ -10,6 +10,7 @@ class SplashViewModel extends BaseViewModel {
   final _sharedPrefsService = locator<SharedPresService>();
   final _navigationService = NavigationService();
 
+  //init method
   void init() async {
     await Future.delayed(const Duration(seconds: 2));
     if(_authService.isUserLoggedIn) {

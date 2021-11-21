@@ -16,7 +16,7 @@ class SettingsViewModel extends BaseViewModel {
 
   void logout() {
     _authService.signOut();
-    _navigationService.navigateTo(Routes.loginView);
+    _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
   }
 
 }
