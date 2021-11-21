@@ -175,7 +175,7 @@ class HomeView extends StatelessWidget {
                                                     model.incomeAndExpenses[
                                                         index];
                                                 return Dismissible(
-                                                  key: const Key('value'),
+                                                  key: UniqueKey(),
                                                   onDismissed: (_) {
                                                     model.deleteIncomeOrExpence(
                                                         currentValue, index);
@@ -450,7 +450,7 @@ class FabContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
       child: Container(
         height: 30,

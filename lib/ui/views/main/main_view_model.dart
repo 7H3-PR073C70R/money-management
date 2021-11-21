@@ -20,6 +20,14 @@ class MainViewModel extends BaseViewModel {
 
   Future<void> init() async {
     log.i('started');
+
+    //! Fetch data from firebase on login and save it locally.
+    await _onlineDb.getAllIncomeAndExpenses();
+    await _onlineDb.getAllBudgetExpenses();
+    await _onlineDb.getAllBudgets();
+    await _onlineDb.getAllNotes();
+
+    log.i('done gettig data from online db');
     
     //! Fetch income and expenses from locally db on setup.
     final incomeAndExpensesResult = await runBusyFuture(_dbService.readAll(
@@ -49,14 +57,6 @@ class MainViewModel extends BaseViewModel {
     _onlineDb.addBudgetExpenses(budgetExpenses);
 
     log.i('done updating data');
-
-    //! Fetch data from firebase on login and save it locally.
-    _onlineDb.getAllIncomeAndExpenses();
-    _onlineDb.getAllBudgetExpenses();
-    _onlineDb.getAllBudgets();
-    _onlineDb.getAllNotes();
-
-    log.i('done gettig data from online db');
   }
   
   int _currentPageIndex = 0;

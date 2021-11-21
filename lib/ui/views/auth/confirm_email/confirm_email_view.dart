@@ -65,7 +65,7 @@ class ConfirmEmailView extends StatelessWidget {
                       ),
                     ),
                     verticalSpaceSmall,
-                    GestureDetector(
+                    InkWell(
                       child: RichText(
                         text: TextSpan(
                             text: dontRecieveCodeText,

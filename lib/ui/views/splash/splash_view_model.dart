@@ -13,12 +13,12 @@ class SplashViewModel extends BaseViewModel {
   void init() async {
     await Future.delayed(const Duration(seconds: 2));
     if(_authService.isUserLoggedIn) {
-      _navigationService.navigateTo(Routes.mainView);
+      _navigationService.pushNamedAndRemoveUntil(Routes.mainView);
       return;
     } else if(_sharedPrefsService.user != null) {
-      _navigationService.navigateTo(Routes.loginView);
+      _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
       return;
     }
-    _navigationService.navigateTo(Routes.startUpView);
+    _navigationService.pushNamedAndRemoveUntil(Routes.startUpView);
   }
 }

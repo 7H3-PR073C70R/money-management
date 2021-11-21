@@ -63,7 +63,7 @@ class BudgetView extends StatelessWidget {
                               child: ListView.separated(
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) => Dismissible(
-                                        key: const Key('budget'),
+                                        key: UniqueKey(),
                                         onDismissed: (_) {
                                           model.deleteBudget(
                                               model.budgetsToDisplay[index]);
@@ -117,7 +117,7 @@ class BudgetView extends StatelessWidget {
                                                     .errorColor),
                                           ),
                                         ),
-                                        child: GestureDetector(
+                                        child: InkWell(
                                           onTap: () => model.gotoBudgetInfoView(
                                               model.budgetsToDisplay[index]),
                                           child: Container(

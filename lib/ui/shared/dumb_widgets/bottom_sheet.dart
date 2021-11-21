@@ -146,7 +146,7 @@ class Filter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 37.0),
-      child: GestureDetector(
+      child: InkWell(
         onTap: onTap,
         child: Row(
           children: [

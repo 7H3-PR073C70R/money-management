@@ -42,7 +42,7 @@ class SignUpViewModel extends BaseViewModel {
 
   void signUpWithGoogle() async {
     try {
-      await runBusyFuture(_authService.signInWithGoogle());
+      await _authService.signInWithGoogle();
     } catch (e) {
       log.i(e);
     }

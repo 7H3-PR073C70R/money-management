@@ -25,7 +25,7 @@ class StartUpView extends StatelessWidget {
               if (model.index != 0)
                 Padding(
                   padding: const EdgeInsets.only(top: 35, left: 37),
-                  child: GestureDetector(
+                  child: InkWell(
                       onTap: () => model.updateIndex(true),
                       child: SvgPicture.asset(backArrowSvg)),
                 ),
@@ -89,14 +89,14 @@ class StartUpView extends StatelessWidget {
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                GestureDetector(
+                                InkWell(
                                   onTap: model.gotoLoginOrSignUP,
                                   child: BoxText.body(
                                     skipText,
                                     color: Colors.white,
                                   ),
                                 ),
-                                GestureDetector(
+                                InkWell(
                                   onTap: () => model.updateIndex(false),
                                   child: BoxText.body(
                                     nextText,
@@ -105,7 +105,7 @@ class StartUpView extends StatelessWidget {
                                 )
                               ],
                             )
-                          : GestureDetector(
+                          : InkWell(
                               onTap: model.gotoLoginOrSignUP,
                               child: Container(
                                 height: 52,
