@@ -146,7 +146,7 @@ class SignUpView extends StatelessWidget {
                                       alreadyHaveanAccountText,
                                       color: kcMiniGray,
                                     ),
-                                    GestureDetector(
+                                    InkWell(
                                         onTap: model.gotoLogin,
                                         child: BoxText.body(
                                           loginOrSignupLoginText,

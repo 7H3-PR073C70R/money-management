@@ -43,6 +43,7 @@ class LoginViewModel extends BaseViewModel {
   }
 
   Future<void> login() async {
+    log.i('email: $_email & password: $_password');
     try {
       await runBusyFuture(
           _authService.signInWithCred(

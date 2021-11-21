@@ -119,7 +119,7 @@ class BudgetInfoView extends StatelessWidget {
                           itemBuilder: (context, index) => Padding(
                             padding: const EdgeInsets.only(top: 18),
                             child: Dismissible(
-                              key: const Key('value'),
+                              key: UniqueKey(),
                               onDismissed: (_) {
                                 model.deleteBudgetExpenses(
                                     indexToDelete: index);

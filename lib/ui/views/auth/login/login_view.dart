@@ -82,7 +82,7 @@ class LoginView extends StatelessWidget {
                         verticalSpaceVeryTiny,
                         SizedBox(
                           width: double.infinity,
-                          child: GestureDetector(
+                          child: InkWell(
                             onTap: model.navigateToForgetPassword,
                             child: Text(
                               forgetPasswordText,

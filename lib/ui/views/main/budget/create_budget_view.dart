@@ -85,7 +85,7 @@ class CreateBudgetView extends StatelessWidget {
                       ),
                     ),
                     verticalSpaceVeryTiny,
-                    GestureDetector(
+                    InkWell(
                         onTap: () async {
                           FocusScope.of(context).unfocus();
                           await showDatePicker(

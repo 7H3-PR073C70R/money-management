@@ -51,3 +51,7 @@ app.*.map.json
 
 # Generared App File
 /lib/app/app.*.dart
+
+# key properties
+key.properties
+app/upload-keystore.jks

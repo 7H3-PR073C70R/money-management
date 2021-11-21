@@ -52,7 +52,7 @@ class NoteView extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 35.0, vertical: 10),
                   child: ListView.separated(
-                      itemBuilder: (context, index) => GestureDetector(
+                      itemBuilder: (context, index) => InkWell(
                         onTap: () => model.naviateToViewNote(selectedNote: model.notes[index], index: index, model: model),
                         child: Container(
                               height: 97,

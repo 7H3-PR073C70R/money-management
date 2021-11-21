@@ -50,11 +50,15 @@ class OnlineDbService {
       final result =
           _mainCollection.doc(uid).collection(bucket).doc(uid).snapshots();
       result.first.then((value) {
-        List result = value.get(bucket).toList();
-        for (var value in result) {
-          final objToSave = obj.fromJson(value);
-          log.i(objToSave);
-          _dbService.insert(obj: objToSave, table: tableName);
+        try {
+          List result = value.get(bucket).toList();
+          for (var value in result) {
+            final objToSave = obj.fromJson(value);
+            log.i(objToSave);
+            _dbService.insert(obj: objToSave, table: tableName);
+          }
+        } catch (e) {
+          log.i(e);
         }
       });
     } catch (e) {

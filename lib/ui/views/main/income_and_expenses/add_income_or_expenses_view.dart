@@ -71,7 +71,7 @@ class AddIncomeOrExpensesView extends StatelessWidget {
                             onChanged: model.setAmount,
                             keyboardType: TextInputType.number),
                         verticalSpaceVeryTiny,
-                        GestureDetector(
+                        InkWell(
                           onTap: () {
                             focusScope.unfocus();
                             model.setShowModelBottomSheet();
@@ -87,7 +87,7 @@ class AddIncomeOrExpensesView extends StatelessWidget {
                               )),
                         ),
                         verticalSpaceVeryTiny,
-                        GestureDetector(
+                        InkWell(
                             onTap: () {
                               focusScope.unfocus();
                               showDatePicker(
@@ -171,7 +171,7 @@ class BuildBottomModelSheet extends StatelessWidget {
             height: (screenHeiht(context) * 0.5) - 50,
             padding: const EdgeInsets.symmetric(horizontal: 31),
             child: ListView.separated(
-                itemBuilder: (context, index) => GestureDetector(
+                itemBuilder: (context, index) => InkWell(
                       onTap: () => model.setCategory(dataList[index]),
                       child: Container(
                         height: 50,

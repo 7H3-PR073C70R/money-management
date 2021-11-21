@@ -26,7 +26,7 @@ class BoxButton extends StatelessWidget {
         : isSignUp
             ? Colors.transparent
             : kcPrimaryColor;
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 350),
