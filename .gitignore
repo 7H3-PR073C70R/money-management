@@ -55,3 +55,6 @@ app.*.map.json
 # key properties
 key.properties
 app/upload-keystore.jks
+
+# json
+android/app/*.json
