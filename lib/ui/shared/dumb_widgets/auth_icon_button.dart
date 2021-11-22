@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../const_color_helper.dart';
 
 class BuildAuthButtomIcon extends StatelessWidget {

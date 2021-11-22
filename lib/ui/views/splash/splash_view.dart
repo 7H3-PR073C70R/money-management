@@ -1,9 +1,9 @@
 import 'package:box_ui/box_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:money_management/constants/app_image_path.dart';
-import 'package:money_management/ui/shared/const_ui_helper.dart';
-import 'package:money_management/ui/shared/dumb_widgets/statusbar.dart';
-import 'package:money_management/ui/views/splash/splash_view_model.dart';
+import '../../../constants/app_image_path.dart';
+import '../../shared/const_ui_helper.dart';
+import '../../shared/dumb_widgets/statusbar.dart';
+import 'splash_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class SplashView extends StatelessWidget {

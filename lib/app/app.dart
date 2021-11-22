@@ -1,5 +1,5 @@
-import 'package:money_management/ui/views/main/change_password/change_password_view.dart';
-import 'package:money_management/ui/views/splash/splash_view.dart';
+import '../ui/views/main/change_password/change_password_view.dart';
+import '../ui/views/splash/splash_view.dart';
 
 import '../service/db_service.dart';
 import '../service/shared_prefs.dart';
