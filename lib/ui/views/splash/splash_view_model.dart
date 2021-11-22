@@ -1,7 +1,7 @@
-import 'package:money_management/app/app.locator.dart';
-import 'package:money_management/app/app.router.dart';
-import 'package:money_management/service/auth_service.dart';
-import 'package:money_management/service/shared_prefs.dart';
+import '../../../app/app.locator.dart';
+import '../../../app/app.router.dart';
+import '../../../service/auth_service.dart';
+import '../../../service/shared_prefs.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 

@@ -1,12 +1,12 @@
-import 'package:money_management/app/app.locator.dart';
-import 'package:money_management/app/app.logger.dart';
-import 'package:money_management/constants/app_string.dart';
-import 'package:money_management/model/budget_expense_model.dart';
-import 'package:money_management/model/budget_model.dart';
-import 'package:money_management/model/incomde_and_expenses_model.dart';
-import 'package:money_management/model/note_model.dart';
-import 'package:money_management/service/db_service.dart';
-import 'package:money_management/service/online_db_service.dart';
+import '../../../app/app.locator.dart';
+import '../../../app/app.logger.dart';
+import '../../../constants/app_string.dart';
+import '../../../model/budget_expense_model.dart';
+import '../../../model/budget_model.dart';
+import '../../../model/incomde_and_expenses_model.dart';
+import '../../../model/note_model.dart';
+import '../../../service/db_service.dart';
+import '../../../service/online_db_service.dart';
 import 'package:stacked/stacked.dart';
 
 MainViewModel mainViewModel = MainViewModel();
@@ -22,10 +22,7 @@ class MainViewModel extends BaseViewModel {
     log.i('started');
 
     //! Fetch data from firebase on login and save it locally.
-    await _onlineDb.getAllIncomeAndExpenses();
-    await _onlineDb.getAllBudgetExpenses();
-    await _onlineDb.getAllBudgets();
-    await _onlineDb.getAllNotes();
+    await runBusyFuture(_onlineDb.getData());
 
     log.i('done gettig data from online db');
     
@@ -57,6 +54,7 @@ class MainViewModel extends BaseViewModel {
     _onlineDb.addBudgetExpenses(budgetExpenses);
 
     log.i('done updating data');
+    notifyListeners();
   }
   
   int _currentPageIndex = 0;
