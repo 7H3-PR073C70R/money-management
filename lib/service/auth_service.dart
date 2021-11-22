@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:money_management/service/user_service.dart';
 import '../app/app.locator.dart';
 import '../app/app.logger.dart';
 import '../constants/enums.dart';
@@ -10,6 +11,7 @@ import 'shared_prefs.dart';
 class AuthService {
   final _auth = FirebaseAuth.instance;
   final _sharedPrefsService = locator<SharedPresService>();
+  final _userService = locator<UserService>();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final log = getLogger('Auth');
 
@@ -56,8 +58,13 @@ class AuthService {
             lname: registeredUser.user!.displayName!.split(' ')[1],
             profileUrl: registeredUser.user!.photoURL);
 
-        await _saveUserOnlineAndLocally(
-            userid: registeredUser.user!.uid, user: user);
+        final userId = _userService.user.id;
+        final registeredUserId = registeredUser.user!.uid;
+
+        if (userId != registeredUserId) {
+          await _saveUserOnlineAndLocally(
+              userid: registeredUser.user!.uid, user: user);
+        }
       });
     } catch (e) {
       log.i(e);
@@ -135,7 +142,7 @@ class AuthService {
   Future<void> changePassword(String password) async {
     try {
       _auth.currentUser!.updatePassword(password);
-    } catch(e) {
+    } catch (e) {
       rethrow;
     }
   }

@@ -22,10 +22,7 @@ class MainViewModel extends BaseViewModel {
     log.i('started');
 
     //! Fetch data from firebase on login and save it locally.
-    await _onlineDb.getAllIncomeAndExpenses();
-    await _onlineDb.getAllBudgetExpenses();
-    await _onlineDb.getAllBudgets();
-    await _onlineDb.getAllNotes();
+    await runBusyFuture(_onlineDb.getData());
 
     log.i('done gettig data from online db');
     
@@ -57,6 +54,7 @@ class MainViewModel extends BaseViewModel {
     _onlineDb.addBudgetExpenses(budgetExpenses);
 
     log.i('done updating data');
+    notifyListeners();
   }
   
   int _currentPageIndex = 0;

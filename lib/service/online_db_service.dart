@@ -108,6 +108,13 @@ class OnlineDbService {
         tableName: budgetExpenseTableName);
   }
 
+  Future<void> getData() async {
+    await getAllIncomeAndExpenses();
+    await getAllBudgetExpenses();
+    await getAllBudgets();
+    await getAllNotes();
+  }
+
   Future<void> updateUserInfo(User user) async {
     await _firestore.collection('users').doc(uid).update(user.toJson());
     if (user.email != null && user.email!.isNotEmpty) {
