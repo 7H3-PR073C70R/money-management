@@ -1,6 +1,6 @@
 import 'package:box_ui/box_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:money_management/constants/validator.dart';
+import '../../../../constants/validator.dart';
 import '../../../../constants/app_string.dart';
 import '../../../shared/const_ui_helper.dart';
 import 'package:stacked/stacked.dart';

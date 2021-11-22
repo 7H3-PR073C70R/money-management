@@ -8,6 +8,8 @@ import 'package:stacked/stacked.dart';
 class SignUpViewModel extends BaseViewModel {
   final _navigationService = NavigationService();
   final log = getLogger('SignUpViewModel');
+  var _isLoadingState = false;
+  bool get isLoadingState => _isLoadingState;
 
   final _authService = AuthService();
   bool _isPasswordVisible = true;
@@ -27,6 +29,11 @@ class SignUpViewModel extends BaseViewModel {
     _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
   }
 
+  void _setIsLoadingState() {
+    _isLoadingState = !_isLoadingState;
+    notifyListeners();
+  }
+
   void signUp({required User user, required String password}) async {
     try {
       await runBusyFuture(_authService.signUpWithCred(
@@ -42,9 +49,13 @@ class SignUpViewModel extends BaseViewModel {
 
   void signUpWithGoogle() async {
     try {
+      _setIsLoadingState();
       await _authService.signInWithGoogle();
+    _navigationService.pushNamedAndRemoveUntil(Routes.mainView,);
     } catch (e) {
       log.i(e);
+    }finally {
+      _setIsLoadingState();
     }
   }
 }

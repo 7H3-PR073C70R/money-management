@@ -1,6 +1,7 @@
 import 'package:box_ui/box_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../constants/app_image_path.dart';
 import '../../../constants/app_string.dart';
 import '../../views/main/main_view_model.dart';

@@ -1,5 +1,5 @@
-import 'package:money_management/app/app.logger.dart';
-import 'package:money_management/service/auth_service.dart';
+import '../../../../app/app.logger.dart';
+import '../../../../service/auth_service.dart';
 import 'package:stacked/stacked.dart';
 
 class ChangePasswordViewModel extends BaseViewModel {
